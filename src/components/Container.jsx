@@ -32,6 +32,17 @@ export default function Container() {
     
     
     let MonthDays = new Date(data?.Year, data?.Month, 0).getDate();
+    let hoy = new Date()
+    let dia = new Date (data?.Year, data?.Month, 15).getDay();
+    const diaArray = [
+      "Lunes",
+      "Martes",
+      "Miercoles",
+      "Jueves",
+      "Viernes",
+      "Sabado",
+      "Domingo"
+    ];
     let Goal = Math.trunc(data?.Goal * percentage);
     let DailyGoal = Math.trunc(data?.DailyGoal * percentage);
     let GoalAtDay = Math.trunc(data?.Summary.GoalAtDay * percentage);
@@ -43,6 +54,7 @@ export default function Container() {
     let Correction = Math.trunc(
       Math.abs(Diff) / (MonthDays - data?.Summary?.Day)
     );
+    console.log(hoy.get)
     let DataPercentage = {
       Goal: Goal,
       DailyGoal: DailyGoal,
@@ -156,15 +168,38 @@ export default function Container() {
       <div className="Calendar">
         {data?.DailySale &&
           data?.DailySale.map((day, i) => (
+            // <div key={i}>
+            //   <p>{i + 1}</p>
+            //   <p>Vta afecta: {day.Venta.toLocaleString()}</p>
+            //   <p>Bonificación: {day.Bonificacion.toLocaleString()}</p>
+
+            // </div>
+
             <div key={i}>
               <p>{i + 1}</p>
-              <p>Vendido: {day.Venta.toLocaleString()}</p>
-              <p>Bonificación: {day.Bonificacion.toLocaleString()}</p>
               <p>
-                Cumplimiento:{" "}
-                {((day.Venta / (data.DailyGoal * percentage) ) * 100).toFixed(2).toLocaleString()}%
+                {((day.Venta  / (data.DailyGoal * percentage) ) * 100).toFixed(2).toLocaleString()}%
               </p>
+              <form className="Report" onSubmit={(e) => {
+                e.preventDefault()
+
+                let tempDailySale = data.DailySale
+
+                tempDailySale[i].Venta = parseInt(e.target.SelledAtDay.value)
+                tempDailySale[i].Bonificacion = parseInt(e.target.Bonification.value)
+
+                console.log(tempDailySale)
+                
+              }}>
+                <label htmlFor="SelledAtDay">Vta afecta: </label>
+                <input id="SelledAtDay" type="number" defaultValue={day.Venta}/>
+                <label htmlFor="Bonification">Bonificación: </label>
+                <input id="Bonification" type="number" defaultValue={day.Bonificacion}/>
+                <input className="Submit" type="submit" value="Actualizar" />
+              </form>
+              
             </div>
+            
           ))}
       </div>
     </div>
