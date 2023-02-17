@@ -4,7 +4,6 @@ import apiGetMonths from "./api/getMonths";
 import DataCard from "./DataCard";
 import "../Style.css";
 
-
 // Charts
 
 import {
@@ -17,15 +16,16 @@ import {
   Tooltip,
   Legend,
   LineElement,
-} from 'chart.js';
-import { Bar } from "react-chartjs-2";
+  ArcElement,
+} from "chart.js";
+import { Bar, Doughnut } from "react-chartjs-2";
 
 export default function Container() {
   const [data, setData] = useState();
   const [Months, setMonths] = useState();
   const [dataPercentage, setDataPercentage] = useState();
   const [percentage, setPercentage] = useState(1);
-  const [dailyGoalC, setDailyGoalC] = useState()
+  const [dailyGoalC, setDailyGoalC] = useState();
 
   useEffect(() => {
     apiGetMonths().then((res) => {
@@ -35,22 +35,18 @@ export default function Container() {
   }, []);
 
   useEffect(() => {
-    adjustPercentage()
+    adjustPercentage();
   }, [data]);
 
   useEffect(() => {
-    
     adjustPercentage();
-    
   }, [percentage]);
 
-
   function adjustPercentage() {
-    
     let MonthDays = new Date(data?.Year, data?.Month, 0).getDate();
-    
-    let hoy = new Date()
-    let dia = new Date (data?.Year, data?.Month, 15).getDay();
+
+    let hoy = new Date();
+    let dia = new Date(data?.Year, data?.Month, 15).getDay();
     const DayArray = [
       "Lunes",
       "Martes",
@@ -58,9 +54,9 @@ export default function Container() {
       "Jueves",
       "Viernes",
       "Sabado",
-      "Domingo"
+      "Domingo",
     ];
-    
+
     let Goal = Math.trunc(data?.Goal * percentage);
     let DailyGoal = Math.trunc(data?.DailyGoal * percentage);
     let GoalAtDay = Math.trunc(data?.Summary.GoalAtDay * percentage);
@@ -72,7 +68,7 @@ export default function Container() {
     let Correction = Math.trunc(
       Math.abs(Diff) / (MonthDays - data?.Summary?.Day)
     );
-    console.log(hoy.get)
+    console.log(hoy.get);
     let DataPercentage = {
       Goal: Goal,
       DayArray: DayArray,
@@ -104,7 +100,6 @@ export default function Container() {
       );
     }
 
-
     const chartData = {
       labels,
       datasets: [
@@ -126,13 +121,10 @@ export default function Container() {
       ],
     };
 
-    setDailyGoalC(chartData)
-    
-    
+    setDailyGoalC(chartData);
 
     setDataPercentage(DataPercentage);
   }
-
 
   const MonthsArray = [
     "Enero",
@@ -170,11 +162,11 @@ export default function Container() {
     PointElement,
     BarElement,
     LineElement,
+    ArcElement,
     Title,
     Tooltip,
     Legend
   );
-
 
   const options = {
     responsive: true,
@@ -192,28 +184,19 @@ export default function Container() {
       y: {
         ticks: {
           font: {
-            size: 10
-          }
+            size: 10,
+          },
         },
       },
       x: {
         ticks: {
           font: {
-            size: 10
-          }
+            size: 10,
+          },
         },
       },
     },
   };
-
-  
-
-
-
-
-
-
-  
 
   return (
     <div className="Container">
@@ -230,7 +213,7 @@ export default function Container() {
               name="Months"
               id="MonthSelector"
               onChange={(e) => {
-                console.log(e.target.value)
+                console.log(e.target.value);
                 setData(e.target.value);
               }}
             >
@@ -242,7 +225,7 @@ export default function Container() {
                 ))}
             </select>
           </div>
-          
+
           <div>
             <label htmlFor="PercentageSelector">Porcentaje:</label>
             <select
@@ -258,7 +241,6 @@ export default function Container() {
               <option value={1.1}>110%</option>
             </select>
           </div>
-
         </div>
       </div>
 
@@ -266,7 +248,10 @@ export default function Container() {
 
       <div className="Cards">
         <DataCard Name="Meta" Data={dataPercentage?.Goal.toLocaleString()} />
-        <DataCard Name="Meta Diaria" Data={dataPercentage?.DailyGoal.toLocaleString()} />
+        <DataCard
+          Name="Meta Diaria"
+          Data={dataPercentage?.DailyGoal.toLocaleString()}
+        />
         <DataCard Name="Dia" Data={data?.Summary.Day} />
         <DataCard
           Name="Meta Teorica"
@@ -277,20 +262,24 @@ export default function Container() {
           Data={data?.Summary.SelledAtDay.toLocaleString()}
         />
         <DataCard
-          Name="Porcentaje Al Dia"
-          Data={dataPercentage?.PercentageAtDay}
-        />
-        <DataCard
-          Name="Porcentaje Total"
-          Data={dataPercentage?.TotalPercentage}
-        />
-        <DataCard
           Name="Diferencia"
           Data={dataPercentage?.Diff.toLocaleString()}
         />
         <DataCard
           Name="Correccion de Meta"
           Data={dataPercentage?.Correction.toLocaleString()}
+        />
+        <DataCard
+          Name="Porcentaje Al Dia"
+          Percentage={percentage}
+          Type="percentage"
+          Data={dataPercentage?.PercentageAtDay}
+        />
+        <DataCard
+          Name="Porcentaje Total"
+          Percentage={percentage}
+          Type="percentage"
+          Data={dataPercentage?.TotalPercentage}
         />
       </div>
 
@@ -299,39 +288,56 @@ export default function Container() {
       <div className="Calendar">
         {data?.DailySale &&
           data?.DailySale.map((day, i) => (
-
             <div key={i}>
               <p>{i + 1}</p>
               <p>
-                {(((day.Venta + (day.Bonificacion / 1.19) )/ (data.DailyGoal * percentage) ) * 100).toFixed(2).toLocaleString()}%
+                {(
+                  ((day.Venta + day.Bonificacion / 1.19) /
+                    (data.DailyGoal * percentage)) *
+                  100
+                )
+                  .toFixed(2)
+                  .toLocaleString()}
+                %
               </p>
-              <form className="Report" onSubmit={(e) => {
-                e.preventDefault();
+              <form
+                className="Report"
+                onSubmit={(e) => {
+                  e.preventDefault();
 
-                let dataToUpdate = data;
+                  let dataToUpdate = data;
 
-                dataToUpdate.DailySale[i].Venta = parseInt(e.target.SelledAtDay.value);
-                dataToUpdate.DailySale[i].Bonificacion = parseInt(e.target.Bonification.value);
+                  dataToUpdate.DailySale[i].Venta = parseInt(
+                    e.target.SelledAtDay.value
+                  );
+                  dataToUpdate.DailySale[i].Bonificacion = parseInt(
+                    e.target.Bonification.value
+                  );
 
-                apiPutDailySale(dataToUpdate);
-                console.log(dataToUpdate);
-                
-              }}>
+                  apiPutDailySale(dataToUpdate);
+                  console.log(dataToUpdate);
+                }}
+              >
                 <label htmlFor="SelledAtDay">Vta afecta: </label>
-                <input id="SelledAtDay" type="number" defaultValue={day.Venta}/>
+                <input
+                  id="SelledAtDay"
+                  type="number"
+                  defaultValue={day.Venta}
+                />
                 <label htmlFor="Bonification">Bonificación: </label>
-                <input id="Bonification" type="number" defaultValue={day.Bonificacion}/>
-                <input className="Submit" type="submit" value="Actualizar"/>
+                <input
+                  id="Bonification"
+                  type="number"
+                  defaultValue={day.Bonificacion}
+                />
+                <input className="Submit" type="submit" value="Actualizar" />
               </form>
-              
             </div>
-            
           ))}
       </div>
 
-
       <div className="Charts">
-        {dailyGoalC && (<Bar options={options} data={dailyGoalC}/>)}
+        {dailyGoalC && <Bar options={options} data={dailyGoalC} />}
       </div>
     </div>
   );
