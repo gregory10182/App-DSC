@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from "react";
-import apiGetData from "./api/getData";
+import apiPutDailySale from "./api/putDailySale";
 import apiGetMonths from "./api/getMonths";
 import DataCard from "./DataCard";
 import "../Style.css";
+
+
+// Charts
+
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  LineElement,
+} from 'chart.js';
+import { Bar } from "react-chartjs-2";
 
 export default function Container() {
   const [data, setData] = useState();
   const [Months, setMonths] = useState();
   const [dataPercentage, setDataPercentage] = useState();
   const [percentage, setPercentage] = useState(1);
+  const [dailyGoalC, setDailyGoalC] = useState()
 
   useEffect(() => {
     apiGetMonths().then((res) => {
@@ -30,11 +47,11 @@ export default function Container() {
 
   function adjustPercentage() {
     
-    
     let MonthDays = new Date(data?.Year, data?.Month, 0).getDate();
+    
     let hoy = new Date()
     let dia = new Date (data?.Year, data?.Month, 15).getDay();
-    const diaArray = [
+    const DayArray = [
       "Lunes",
       "Martes",
       "Miercoles",
@@ -43,6 +60,7 @@ export default function Container() {
       "Sabado",
       "Domingo"
     ];
+    
     let Goal = Math.trunc(data?.Goal * percentage);
     let DailyGoal = Math.trunc(data?.DailyGoal * percentage);
     let GoalAtDay = Math.trunc(data?.Summary.GoalAtDay * percentage);
@@ -57,6 +75,7 @@ export default function Container() {
     console.log(hoy.get)
     let DataPercentage = {
       Goal: Goal,
+      DayArray: DayArray,
       DailyGoal: DailyGoal,
       GoalAtDay: GoalAtDay,
       PercentageAtDay: PercentageAtDay,
@@ -64,6 +83,52 @@ export default function Container() {
       Diff: Diff,
       Correction: Correction,
     };
+
+    let labels = [];
+    for (
+      let i = 1;
+      i <=
+      new Date(
+        MonthsArrayEN[data?.Month - 1] + " " + i + "," + data?.Year
+      ).getDate();
+      i++
+    ) {
+      let date = new Date(
+        MonthsArrayEN[data?.Month - 1] + " " + i + "," + data?.Year
+      );
+      let nameDay = date.getDay();
+      labels.push(
+        dataPercentage.DayArray[nameDay === 0 ? 6 : nameDay - 1] +
+          " " +
+          date.getDate()
+      );
+    }
+
+
+    const chartData = {
+      labels,
+      datasets: [
+        {
+          label: "Meta diaria",
+          data: labels.map(() => DailyGoal),
+          type: "line",
+          borderColor: "#eddf1c",
+          backgroundColor: "#eddf1c",
+        },
+        {
+          label: "Venta Total",
+          data: data?.DailySale.map((day, i) =>
+            Math.trunc(day.Venta + day.Bonificacion / 1.19)
+          ),
+          borderColor: "#009635",
+          backgroundColor: "#009635",
+        },
+      ],
+    };
+
+    setDailyGoalC(chartData)
+    
+    
 
     setDataPercentage(DataPercentage);
   }
@@ -83,6 +148,72 @@ export default function Container() {
     "Noviembre",
     "Diciembre",
   ];
+
+  const MonthsArrayEN = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  ChartJS.register(
+    CategoryScale,
+    LinearScale,
+    PointElement,
+    BarElement,
+    LineElement,
+    Title,
+    Tooltip,
+    Legend
+  );
+
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Venta Diaria",
+      },
+    },
+    maintainAspectRatio: false,
+    scales: {
+      y: {
+        ticks: {
+          font: {
+            size: 10
+          }
+        },
+      },
+      x: {
+        ticks: {
+          font: {
+            size: 10
+          }
+        },
+      },
+    },
+  };
+
+  
+
+
+
+
+
+
+  
 
   return (
     <div className="Container">
@@ -168,39 +299,39 @@ export default function Container() {
       <div className="Calendar">
         {data?.DailySale &&
           data?.DailySale.map((day, i) => (
-            // <div key={i}>
-            //   <p>{i + 1}</p>
-            //   <p>Vta afecta: {day.Venta.toLocaleString()}</p>
-            //   <p>Bonificación: {day.Bonificacion.toLocaleString()}</p>
-
-            // </div>
 
             <div key={i}>
               <p>{i + 1}</p>
               <p>
-                {((day.Venta  / (data.DailyGoal * percentage) ) * 100).toFixed(2).toLocaleString()}%
+                {(((day.Venta + (day.Bonificacion / 1.19) )/ (data.DailyGoal * percentage) ) * 100).toFixed(2).toLocaleString()}%
               </p>
               <form className="Report" onSubmit={(e) => {
-                e.preventDefault()
+                e.preventDefault();
 
-                let tempDailySale = data.DailySale
+                let dataToUpdate = data;
 
-                tempDailySale[i].Venta = parseInt(e.target.SelledAtDay.value)
-                tempDailySale[i].Bonificacion = parseInt(e.target.Bonification.value)
+                dataToUpdate.DailySale[i].Venta = parseInt(e.target.SelledAtDay.value);
+                dataToUpdate.DailySale[i].Bonificacion = parseInt(e.target.Bonification.value);
 
-                console.log(tempDailySale)
+                apiPutDailySale(dataToUpdate);
+                console.log(dataToUpdate);
                 
               }}>
                 <label htmlFor="SelledAtDay">Vta afecta: </label>
                 <input id="SelledAtDay" type="number" defaultValue={day.Venta}/>
                 <label htmlFor="Bonification">Bonificación: </label>
                 <input id="Bonification" type="number" defaultValue={day.Bonificacion}/>
-                <input className="Submit" type="submit" value="Actualizar" />
+                <input className="Submit" type="submit" value="Actualizar"/>
               </form>
               
             </div>
             
           ))}
+      </div>
+
+
+      <div className="Charts">
+        {dailyGoalC && (<Bar options={options} data={dailyGoalC}/>)}
       </div>
     </div>
   );
