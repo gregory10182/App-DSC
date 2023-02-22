@@ -46,10 +46,10 @@ export default function DataCard(props) {
             : parseInt(Percentage) * 100 - parseInt(Data),
         ],
         cutout: 13,
-        borderColor: ["#ffffff", "#ffffff"],
+        borderColor: ["#ffffff","#ffffff"],
         backgroundColor: [
           parseInt(Data) < 50 ? "#DC0505" : "#009635",
-          "#ffffff",
+          "#D6D6D6",
         ],
         circumference: 190,
         rotation: 264,
@@ -70,7 +70,7 @@ export default function DataCard(props) {
       const yCenter = chart.getDatasetMeta(0).data[0].y;
 
       ctx.save();
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = data.datasets[0].data[0] < 50 ? "#DC0505" : "#ffffff";
       ctx.font = "bold 10px sans-serif";
       ctx.textAlign = "center";
       ctx.fillText(data.datasets[0].data[0] + " %", xCenter, yCenter);
@@ -81,14 +81,12 @@ export default function DataCard(props) {
     return (
       <div className="DataCard">
         {parseInt(Data) < 0 ? (
-          <h1 style={{ color: "rgba(170, 5, 5, 1)" }}>{Data}</h1>
+          <h1 style={{ color: "rgba(170, 5, 5, 1)", marginTop: 17 }}>{Data}</h1>
         ) : (
-          <h1>{Data}</h1>
+          <h1 style={{marginTop: 17}}>{Data}</h1>
         )}
 
-        <p style={{ color: "#eddf1c" }}>{Name}</p>
-
-        <img src={Img} alt="" />
+        <p>{Name}</p>
       </div>
     );
   } else if (Type === "percentage") {
@@ -98,9 +96,7 @@ export default function DataCard(props) {
           <Doughnut options={options} data={GaugeData} plugins={[GaugeText]} />
         </div>
 
-        <p style={{ color: "#eddf1c" }}>{Name}</p>
-
-        <img src={Img} alt="" />
+        <p>{Name}</p>
       </div>
     );
   }

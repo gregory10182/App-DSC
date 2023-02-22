@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import apiPutDailySale from "./api/putDailySale";
 import apiGetMonths from "./api/getMonths";
-import DataCard from "./DataCard";
+import Cards from "./Cards";
+import Calendar from "./Calendar";
+
 import "../Style.css";
 
 // Charts
@@ -246,95 +247,11 @@ export default function Container() {
 
       <h1 className="SectionTitle">Resumen</h1>
 
-      <div className="Cards">
-        <DataCard Name="Meta" Data={dataPercentage?.Goal.toLocaleString()} />
-        <DataCard
-          Name="Meta Diaria"
-          Data={dataPercentage?.DailyGoal.toLocaleString()}
-        />
-        <DataCard Name="Dia" Data={data?.Summary.Day} />
-        <DataCard
-          Name="Meta Teorica"
-          Data={dataPercentage?.GoalAtDay.toLocaleString()}
-        />
-        <DataCard
-          Name="Vendido Al Dia"
-          Data={data?.Summary.SelledAtDay.toLocaleString()}
-        />
-        <DataCard
-          Name="Diferencia"
-          Data={dataPercentage?.Diff.toLocaleString()}
-        />
-        <DataCard
-          Name="Correccion de Meta"
-          Data={dataPercentage?.Correction.toLocaleString()}
-        />
-        <DataCard
-          Name="Porcentaje Al Dia"
-          Percentage={percentage}
-          Type="percentage"
-          Data={dataPercentage?.PercentageAtDay}
-        />
-        <DataCard
-          Name="Porcentaje Total"
-          Percentage={percentage}
-          Type="percentage"
-          Data={dataPercentage?.TotalPercentage}
-        />
-      </div>
+      <Cards data={data} dataPercentage={dataPercentage} percentage={percentage} />
 
       <h1 className="SectionTitle">Datos Diarios</h1>
 
-      <div className="Calendar">
-        {data?.DailySale &&
-          data?.DailySale.map((day, i) => (
-            <div key={i}>
-              <p>{i + 1}</p>
-              <p>
-                {(
-                  ((day.Venta + day.Bonificacion / 1.19) /
-                    (data.DailyGoal * percentage)) *
-                  100
-                )
-                  .toFixed(2)
-                  .toLocaleString()}
-                %
-              </p>
-              <form
-                className="Report"
-                onSubmit={(e) => {
-                  e.preventDefault();
-
-                  let dataToUpdate = data;
-
-                  dataToUpdate.DailySale[i].Venta = parseInt(
-                    e.target.SelledAtDay.value
-                  );
-                  dataToUpdate.DailySale[i].Bonificacion = parseInt(
-                    e.target.Bonification.value
-                  );
-
-                  apiPutDailySale(dataToUpdate);
-                  console.log(dataToUpdate);
-                }}
-              >
-                <label htmlFor="SelledAtDay">Vta afecta: </label>
-                <input
-                  id="SelledAtDay"
-                  type="number"
-                  defaultValue={day.Venta}
-                />
-                <label htmlFor="Bonification">Bonificación: </label>
-                <input
-                  id="Bonification"
-                  type="number"
-                  defaultValue={day.Bonificacion}
-                />
-                <input className="Submit" type="submit" value="Actualizar" />
-              </form>
-            </div>
-          ))}
-      </div>
+      <Calendar data={data} percentage={percentage}/>
 
       <div className="Charts">
         {dailyGoalC && <Bar options={options} data={dailyGoalC} />}
