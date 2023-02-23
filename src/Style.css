@@ -9,6 +9,7 @@
 
 .Container .SectionTitle{
     font-size: 25px;
+    margin-bottom: 0px;
     color: #009635;
 }
 
@@ -33,7 +34,7 @@
 
 .DataCard h1{
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
 }
 
@@ -104,7 +105,7 @@
     gap: 5px;
     justify-content: center;
     grid-template-columns: repeat(2, 48% [col-start] );
-    grid-template-rows: repeat(16, 120px [row-start]);
+    grid-template-rows: repeat(14, 120px [row-start]);
 }
 
 .Calendar div{
@@ -170,4 +171,12 @@
     flex-wrap: wrap;
     width: 100% !important;
     height: 400px !important;
+}
+
+.ChartButton{
+    width: 85px;
+    height: 40px;
+    margin-bottom: 15px;
+    background-color: #009635;
+    color: #ffffff;
 }

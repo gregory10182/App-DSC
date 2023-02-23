@@ -2,24 +2,12 @@ import React, { useState, useEffect } from "react";
 import apiGetMonths from "./api/getMonths";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
+import Chart from "./Chart";
+
 
 import "../Style.css";
 
-// Charts
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  ArcElement,
-} from "chart.js";
-import { Bar, Doughnut } from "react-chartjs-2";
 
 export default function Container() {
   const [data, setData] = useState();
@@ -27,6 +15,7 @@ export default function Container() {
   const [dataPercentage, setDataPercentage] = useState();
   const [percentage, setPercentage] = useState(1);
   const [dailyGoalC, setDailyGoalC] = useState();
+  const [chartState, setChartState] = useState(false);
 
   useEffect(() => {
     apiGetMonths().then((res) => {
@@ -157,47 +146,9 @@ export default function Container() {
     "December",
   ];
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    BarElement,
-    LineElement,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend
-  );
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Venta Diaria",
-      },
-    },
-    maintainAspectRatio: false,
-    scales: {
-      y: {
-        ticks: {
-          font: {
-            size: 10,
-          },
-        },
-      },
-      x: {
-        ticks: {
-          font: {
-            size: 10,
-          },
-        },
-      },
-    },
-  };
+
+
 
   return (
     <div className="Container">
@@ -253,9 +204,10 @@ export default function Container() {
 
       <Calendar data={data} percentage={percentage}/>
 
-      <div className="Charts">
-        {dailyGoalC && <Bar options={options} data={dailyGoalC} />}
-      </div>
+      {chartState && (<Chart data={dailyGoalC} />)}
+      <button className="ChartButton" onClick={() => {
+        setChartState(!chartState)
+      }}> Grafico </button>
     </div>
   );
 }
