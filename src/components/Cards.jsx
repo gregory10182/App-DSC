@@ -1,7 +1,7 @@
 import React from "react";
 import DataCard from "./DataCard";
 
-import updateDay from "./api/updateDay";
+
 
 
 export default function Cards({data, dataPercentage, percentage}){
@@ -42,10 +42,6 @@ export default function Cards({data, dataPercentage, percentage}){
           Type="percentage"
           Data={dataPercentage?.TotalPercentage}
         />
-
-        <button className="updateDay" onClick={() => {
-          updateDay(data._id)
-        }}>Actualizar Dia</button>
       </div>
     )
 }

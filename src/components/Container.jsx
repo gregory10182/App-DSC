@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import apiGetMonths from "./api/getMonths";
+import updateDay from "./api/updateDay";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
 import Chart from "./Chart";
@@ -26,6 +27,10 @@ export default function Container() {
 
   useEffect(() => {
     adjustPercentage();
+
+    if(data?._id){
+      updateDay(data?._id)
+    }
   }, [data]);
 
   useEffect(() => {
@@ -36,7 +41,6 @@ export default function Container() {
     let MonthDays = new Date(data?.Year, data?.Month, 0).getDate();
 
     let hoy = new Date();
-    let dia = new Date(data?.Year, data?.Month, 15).getDay();
     const DayArray = [
       "Lunes",
       "Martes",
@@ -58,7 +62,6 @@ export default function Container() {
     let Correction = Math.trunc(
       Math.abs(Diff) / (MonthDays - data?.Summary?.Day)
     );
-    console.log(hoy.get);
     let DataPercentage = {
       Goal: Goal,
       DayArray: DayArray,
@@ -154,8 +157,7 @@ export default function Container() {
     <div className="Container">
       <div className="MonthSelector">
         <div className="MonthDisplay">
-          <label htmlFor="">Mes:</label>
-          <p>{MonthsArray[data?.Month - 1]}</p>
+          Control Diario de Venta
         </div>
 
         <div className="Selector">
@@ -196,13 +198,13 @@ export default function Container() {
         </div>
       </div>
 
-      <h1 className="SectionTitle">Resumen</h1>
+      <h1 className="SectionTitle">Resumen al dia</h1>
 
       <Cards data={data} dataPercentage={dataPercentage} percentage={percentage} />
 
-      <h1 className="SectionTitle">Datos Diarios</h1>
+      <h1 className="SectionTitle">Venta Diaria</h1>
 
-      <Calendar data={data} percentage={percentage}/>
+      <Calendar data={data} percentage={percentage} days={dailyGoalC?.labels} />
 
       {chartState && (<Chart data={dailyGoalC} />)}
       <button className="ChartButton" onClick={() => {

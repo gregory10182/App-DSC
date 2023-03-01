@@ -1,14 +1,14 @@
 import React from "react";
 import apiPutDailySale from "./api/putDailySale";
 
-export default function Calendar({data, percentage}) {
+export default function Calendar({data, percentage, days}) {
 
   return (
     <div className="Calendar">
       {data?.DailySale &&
         data?.DailySale.map((day, i) => (
           <div key={i}>
-            <p>{i + 1}</p>
+            <p>{days[i]}</p>
             <p>
               {(
                 ((day.Venta + day.Bonificacion / 1.19) /
