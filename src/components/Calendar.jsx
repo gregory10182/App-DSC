@@ -34,7 +34,6 @@ export default function Calendar({data, percentage, days}) {
                 );
 
                 apiPutDailySale(dataToUpdate);
-                console.log(dataToUpdate);
               }}
             >
               <label htmlFor="SelledAtDay">Vta afecta: </label>

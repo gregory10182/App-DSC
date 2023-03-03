@@ -1,6 +1,6 @@
-export default async function apiPutDailySale(data) {
-    return await fetch("https://zany-gold-gopher-hat.cyclic.app/DailySale/", {
-      method: "PUT",
+export default async function postMonth(data) {
+    return await fetch("https://zany-gold-gopher-hat.cyclic.app/NewMonth/", {
+      method: "POST",
       headers: {
         'Content-type': 'application/json',
         'Access-Control-Allow-Headers' : "*"

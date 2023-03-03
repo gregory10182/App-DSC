@@ -13,14 +13,14 @@ export default function Cards({data, dataPercentage, percentage}){
           Name="Meta Diaria"
           Data={dataPercentage?.DailyGoal.toLocaleString()}
         />
-        <DataCard Name="Dia" Data={data?.Summary.Day} />
+        <DataCard Name="Dia" Data={data?.Summary?.Day} />
         <DataCard
           Name="Meta Teorica"
           Data={dataPercentage?.GoalAtDay.toLocaleString()}
         />
         <DataCard
           Name="Vendido Al Dia"
-          Data={data?.Summary.SelledAtDay.toLocaleString()}
+          Data={data?.Summary?.SelledAtDay.toLocaleString()}
         />
         <DataCard
           Name="Diferencia"

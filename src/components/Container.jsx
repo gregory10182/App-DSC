@@ -4,6 +4,7 @@ import updateDay from "./api/updateDay";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
 import Chart from "./Chart";
+import CreateMonth from "./CreateMonth";
 
 
 import "../Style.css";
@@ -17,6 +18,7 @@ export default function Container() {
   const [percentage, setPercentage] = useState(1);
   const [dailyGoalC, setDailyGoalC] = useState();
   const [chartState, setChartState] = useState(false);
+  const [month, setMonth] = useState(false);
 
   useEffect(() => {
     apiGetMonths().then((res) => {
@@ -27,7 +29,6 @@ export default function Container() {
 
   useEffect(() => {
     adjustPercentage();
-
     if(data?._id){
       updateDay(data?._id)
     }
@@ -39,8 +40,6 @@ export default function Container() {
 
   function adjustPercentage() {
     let MonthDays = new Date(data?.Year, data?.Month, 0).getDate();
-
-    let hoy = new Date();
     const DayArray = [
       "Lunes",
       "Martes",
@@ -53,11 +52,11 @@ export default function Container() {
 
     let Goal = Math.trunc(data?.Goal * percentage);
     let DailyGoal = Math.trunc(data?.DailyGoal * percentage);
-    let GoalAtDay = Math.trunc(data?.Summary.GoalAtDay * percentage);
+    let GoalAtDay = Math.trunc(data?.Summary?.GoalAtDay * percentage);
     let PercentageAtDay =
-      ((data?.Summary.SelledAtDay / GoalAtDay) * 100).toFixed(1) + "%";
+      ((data?.Summary?.SelledAtDay / GoalAtDay) * 100).toFixed(1) + "%";
     let TotalPercentage =
-      ((data?.Summary.SelledAtDay / Goal) * 100).toFixed(1) + "%";
+      ((data?.Summary?.SelledAtDay / Goal) * 100).toFixed(1) + "%";
     let Diff = data?.Summary?.SelledAtDay - Goal;
     let Correction = Math.trunc(
       Math.abs(Diff) / (MonthDays - data?.Summary?.Day)
@@ -119,21 +118,6 @@ export default function Container() {
     setDataPercentage(DataPercentage);
   }
 
-  const MonthsArray = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-
   const MonthsArrayEN = [
     "January",
     "February",
@@ -155,32 +139,35 @@ export default function Container() {
 
   return (
     <div className="Container">
+      {month && (<CreateMonth />)}
       <div className="MonthSelector">
         <div className="MonthDisplay">
           Control Diario de Venta
         </div>
 
         <div className="Selector">
-          <div>
+          <div className="SelectMP">
             <label htmlFor="MonthSelector">Seleccione Mes:</label>
             <select
               name="Months"
               id="MonthSelector"
               onChange={(e) => {
-                console.log(e.target.value);
-                setData(e.target.value);
+                setData(JSON.parse(e.target.value));
               }}
             >
               {Months &&
                 Months.map((month, i) => (
-                  <option key={i} value={month[i]}>
+                  <option key={i} value={JSON.stringify(month)}>
                     {month._id}
                   </option>
                 ))}
             </select>
+            <button onClick={() => setMonth(!month)}>
+              <img src="https://cdn-icons-png.flaticon.com/512/4421/4421540.png" alt="" srcset="" />
+            </button>
           </div>
 
-          <div>
+          <div className="SelectMP">
             <label htmlFor="PercentageSelector">Porcentaje:</label>
             <select
               name="Months"
