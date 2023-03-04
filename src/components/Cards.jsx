@@ -15,29 +15,29 @@ export default function Cards({data, dataPercentage, percentage}){
         />
         <DataCard Name="Dia" Data={data?.Summary?.Day} />
         <DataCard
-          Name="Meta Teorica"
+          Name="Objetivo Acumulado"
           Data={dataPercentage?.GoalAtDay.toLocaleString()}
         />
         <DataCard
-          Name="Vendido Al Dia"
+          Name="Venta Acumulada"
           Data={data?.Summary?.SelledAtDay.toLocaleString()}
         />
         <DataCard
-          Name="Diferencia"
+          Name="Diferencia Objetivo"
           Data={dataPercentage?.Diff.toLocaleString()}
         />
         <DataCard
-          Name="Correccion de Meta"
+          Name="Venta Diaria Ref"
           Data={dataPercentage?.Correction.toLocaleString()}
         />
         <DataCard
-          Name="Porcentaje Al Dia"
+          Name="Cump Acumulado"
           Percentage={percentage}
           Type="percentage"
           Data={dataPercentage?.PercentageAtDay}
         />
         <DataCard
-          Name="Porcentaje Total"
+          Name="Avance Objetivo"
           Percentage={percentage}
           Type="percentage"
           Data={dataPercentage?.TotalPercentage}

@@ -16,10 +16,10 @@
 .Cards{
     display: grid;
     width: 100%;
-    gap: 5px;
+    gap: 2px;
     justify-content: center;
     align-items: center;
-    grid-template-columns: repeat(3, 31% [col-start]);
+    grid-template-columns: repeat(3, 33% [col-start]);
     grid-template-rows: repeat(3, 80px [row-start]);
 }
 
@@ -46,7 +46,7 @@
     font-weight: 600;
     color: #e9a42b;
     height: 9px;
-    font-size: 9px;
+    font-size: 8px;
     margin: 0;
 }
 
