@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import apiPutDailySale from "./api/putDailySale";
 
 export default function Calendar({data, percentage, days}) {
 
+  
+  const [month, setMonth] = useState(data);
+  
+  useEffect(() => {
+    setMonth(data)
+  }, [data]);
+
   return (
     <div className="Calendar">
-      {data?.DailySale &&
-        data?.DailySale.map((day, i) => (
-          <div key={i}>
+      {month?.DailySale &&
+        month?.DailySale.map((day, i) => (
+          <div key={i + day.Venta + day.Bonificacion}>
             <p>{days[i]}</p>
             <p>
               {(
                 ((day.Venta + day.Bonificacion / 1.19) /
-                  (data.DailyGoal * percentage)) *
+                  (month.DailyGoal * percentage)) *
                 100
               )
                 .toFixed(2)
