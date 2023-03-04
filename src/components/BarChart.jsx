@@ -1,35 +1,14 @@
 import React from "react";
 
 // Charts
+import Chart from 'chart.js/auto';
 
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-  LineElement,
-  ArcElement,
-} from "chart.js";
-import { Bar, Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 
-export default function Chart({data}) {
+export default function BarChart({data}) {
 
 
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    BarElement,
-    LineElement,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend
-  );
+
 
   const options = {
     responsive: true,

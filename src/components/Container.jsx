@@ -3,7 +3,7 @@ import apiGetMonths from "./api/getMonths";
 import updateDay from "./api/updateDay";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
-import Chart from "./Chart";
+import BarChart from "./BarChart";
 import CreateMonth from "./CreateMonth";
 
 
@@ -193,7 +193,7 @@ export default function Container() {
 
       <Calendar data={data} percentage={percentage} days={dailyGoalC?.labels} />
 
-      {chartState && (<Chart data={dailyGoalC} />)}
+      {chartState && (<BarChart data={dailyGoalC} />)}
       <button className="ChartButton" onClick={() => {
         setChartState(!chartState)
       }}> Grafico </button>
