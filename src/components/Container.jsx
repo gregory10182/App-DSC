@@ -141,9 +141,9 @@ export default function Container() {
     <div className="Container">
       {month && (<CreateMonth />)}
       <div className="MonthSelector">
-        <div className="MonthDisplay">
-          Control Diario de Venta
-        </div>
+        <h1 className="SectionTitle">
+          Seguimiento De Venta Diaria
+        </h1>
 
         <div className="Selector">
           <div className="SelectMP">
