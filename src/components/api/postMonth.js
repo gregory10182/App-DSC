@@ -8,6 +8,7 @@ export default async function postMonth(data) {
       mode: "cors",
       body: JSON.stringify(data)
     })
-      .then((response) => console.log(response.json()))
-      .catch((error) => console.log(error));
+      .then((response) => response.text())
+      .then((text) => alert(text))
+      .catch((error) => alert(error));
   }

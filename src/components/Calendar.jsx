@@ -31,6 +31,8 @@ export default function Calendar({data, percentage, days}) {
               onSubmit={(e) => {
                 e.preventDefault();
 
+                
+
                 let dataToUpdate = data;
 
                 dataToUpdate.DailySale[i].Venta = parseInt(
