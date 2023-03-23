@@ -7,8 +7,8 @@
 // }
 
 
-export default async function apiGetMonths() {
-  return await fetch("https://zany-gold-gopher-hat.cyclic.app/", {
+export default async function apiGetMonths(id) {
+  return await fetch("https://zany-gold-gopher-hat.cyclic.app/Month/" + id, {
     method: "GET"
   })
     .then((response) => response.json())

@@ -28,6 +28,7 @@ export default function CreateMonth(){
     return(
         <div className="CreateMonth">
             <form onSubmit={(e) => {
+                e.preventDefault()
 
                 let data = {
                     "Month" : e.target.Month.value,

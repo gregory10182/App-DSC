@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import apiGetMonth from "./api/getMonth";
 import apiGetMonths from "./api/getMonths";
 import updateDay from "./api/updateDay";
 import Cards from "./Cards";
@@ -21,9 +22,17 @@ export default function Container() {
   const [month, setMonth] = useState(false);
 
   useEffect(() => {
-    apiGetMonths().then((res) => {
-      setMonths(res);
-      setData(res[0]);
+    let actualMonth = new Date()
+    actualMonth = (actualMonth.getMonth() + 1) + "-" + actualMonth.getFullYear();
+    apiGetMonth(actualMonth)
+    .then((res) => {
+      setData(res)
+    });
+
+    apiGetMonths()
+    .then((res) => {
+      let ids = res.map((month) => month._id);
+      setMonths(ids);
     });
   }, []);
 
@@ -135,7 +144,7 @@ export default function Container() {
 
 
 
-
+  if(!data) return "Cargando...."
 
   return (
     <div className="Container">
@@ -152,13 +161,17 @@ export default function Container() {
               name="Months"
               id="MonthSelector"
               onChange={(e) => {
-                setData(JSON.parse(e.target.value));
+                apiGetMonth(e.target.value)
+                .then((res) => {
+                  setData(res)
+                })
               }}
+              value={data && data._id}
             >
               {Months &&
                 Months.map((month, i) => (
-                  <option key={i} value={JSON.stringify(month)}>
-                    {month._id}
+                  <option key={i} value={month}>
+                    {month} 
                   </option>
                 ))}
             </select>
