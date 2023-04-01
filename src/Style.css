@@ -256,3 +256,44 @@
     border: none;
     border-radius: 5px;
 }
+
+
+.Login{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: #009635;
+    border-radius: 10px;
+    width: 200px;
+    height: 150px;
+    align-self: center;
+}
+
+
+.Login form{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+.Login input{
+    width: 85%;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+    border: none;
+    color: #009635;
+
+}
+
+.Login button{
+    width: 60px;
+    height: 30px;
+    color: #009635;
+    background-color: #EBEBEB;
+    font-size: 16px;
+}

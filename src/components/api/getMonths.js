@@ -12,5 +12,6 @@ export default async function apiGetMonths() {
     method: "GET"
   })
     .then((response) => response.json())
+    .then((json) => json)
     .catch((error) => console.log(error));
 }

@@ -6,6 +6,7 @@ import Cards from "./Cards";
 import Calendar from "./Calendar";
 import BarChart from "./BarChart";
 import CreateMonth from "./CreateMonth";
+import Login from "./login";
 
 
 import "../Style.css";
@@ -22,18 +23,31 @@ export default function Container() {
   const [month, setMonth] = useState(false);
 
   useEffect(() => {
-    let actualMonth = new Date()
-    actualMonth = (actualMonth.getMonth() + 1) + "-" + actualMonth.getFullYear();
-    apiGetMonth(actualMonth)
-    .then((res) => {
-      setData(res)
-    });
 
+    let ids
     apiGetMonths()
     .then((res) => {
-      let ids = res.map((month) => month._id);
+      ids = res.map((month) => month._id);
       setMonths(ids);
+
+      apiGetMonth(ids[ids.length - 1])
+      .then((res) => {
+        setData(res)
+      });
+      
     });
+
+    // let actualMonth = new Date()
+    // actualMonth = (actualMonth.getMonth() + 1) + "-" + actualMonth.getFullYear();
+    // let month;
+    // apiGetMonth(actualMonth)
+    // .then((res) => {
+    //   month = res
+    //   setData(res)
+    // });
+
+
+
   }, []);
 
   useEffect(() => {
@@ -142,7 +156,13 @@ export default function Container() {
     "December",
   ];
 
-
+  // if(localStorage.getItem('tkn') === null){
+  //   return(
+  //     <div className="Container">
+  //       <Login />
+  //     </div>
+  //   )
+  // }
 
   if(!data) return "Cargando...."
 
