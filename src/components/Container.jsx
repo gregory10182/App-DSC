@@ -6,7 +6,6 @@ import Cards from "./Cards";
 import Calendar from "./Calendar";
 import BarChart from "./BarChart";
 import CreateMonth from "./CreateMonth";
-import Login from "./login";
 
 
 import "../Style.css";
@@ -156,13 +155,7 @@ export default function Container() {
     "December",
   ];
 
-  // if(localStorage.getItem('tkn') === null){
-  //   return(
-  //     <div className="Container">
-  //       <Login />
-  //     </div>
-  //   )
-  // }
+
 
   if(!data) return "Cargando...."
 
