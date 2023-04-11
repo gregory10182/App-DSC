@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import apiGetMonth from "./api/getMonth";
-import apiGetMonths from "./api/getMonths";
 import updateDay from "./api/updateDay";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
 import BarChart from "./BarChart";
 import CreateMonth from "./CreateMonth";
-import Login from "./login";
+import Login from "./Login";
 import apimonth from "./api/month";
 
 import "../Style.css";
