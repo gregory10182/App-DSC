@@ -36,20 +36,6 @@ export default function Login({setUser}) {
     .then((res) => {
       console.log(res)
     })
-
-    apiUser
-      .login({
-        local,
-        password,
-      })
-      .then((res) => {
-        console.log(res);
-
-        window.localStorage.setItem("loggedUser", JSON.stringify(res));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   };
 
   const renderLogin = () => (
