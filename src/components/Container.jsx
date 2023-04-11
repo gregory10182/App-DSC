@@ -6,11 +6,10 @@ import Cards from "./Cards";
 import Calendar from "./Calendar";
 import BarChart from "./BarChart";
 import CreateMonth from "./CreateMonth";
-
+import Login from "./login";
+import apimonth from "./api/month";
 
 import "../Style.css";
-
-
 
 export default function Container() {
   const [data, setData] = useState();
@@ -20,41 +19,59 @@ export default function Container() {
   const [dailyGoalC, setDailyGoalC] = useState();
   const [chartState, setChartState] = useState(false);
   const [month, setMonth] = useState(false);
+  const [user, setUser] = useState("");
+
+  const setUserLogin = (user) => {
+    setUser(user);
+  };
 
   useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
-    let ids
-    apiGetMonths()
-    .then((res) => {
-      ids = res.map((month) => month._id);
-      setMonths(ids);
+    if (loggedUserJSON) {
+      const loggedUser = JSON.parse(loggedUserJSON);
 
-      apiGetMonth(ids[ids.length - 1])
-      .then((res) => {
-        setData(res)
-      });
-      
-    });
+      setUser(loggedUser);
 
-    // let actualMonth = new Date()
-    // actualMonth = (actualMonth.getMonth() + 1) + "-" + actualMonth.getFullYear();
-    // let month;
-    // apiGetMonth(actualMonth)
-    // .then((res) => {
-    //   month = res
-    //   setData(res)
-    // });
+      apimonth.setToken(loggedUser.token);
 
-
-
+      // apimonth.getAll().then((res) => {
+      //   let ids = res.map((month) => ({
+      //     Mid: month.mid,
+      //     id: month.id,
+      //   }));
+      //   setMonths(ids);
+      //   apimonth.getOne(ids[ids.length - 1].id).then((res) => {
+      //     setData(res);
+      //   });
+      // });
+    }
   }, []);
 
   useEffect(() => {
     adjustPercentage();
-    if(data?._id){
-      updateDay(data?._id)
+    if (data?._id) {
+      updateDay(data?._id);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (user != "") {
+      apimonth.setToken(user.token);
+      apimonth.getAll().then((res) => {
+        let ids = res.map((month) => ({
+          Mid: month.mid,
+          id: month.id,
+        }));
+        setMonths(ids);
+        if (ids.length != 0) {
+          apimonth.getOne(ids[ids.length - 1].id).then((res) => {
+            setData(res);
+          });
+        }
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     adjustPercentage();
@@ -155,74 +172,112 @@ export default function Container() {
     "December",
   ];
 
+  if (user === "") {
+    return <Login setUser={setUserLogin} />;
+  } else {
+    return (
+      <div className="Container">
+        <div className="logout">
+          <button
+            onClick={() => {
+              apimonth.setToken(null);
+              window.localStorage.removeItem("loggedUser");
+              setUser("");
+              setData();
+              setMonths();
+            }}
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/10067/10067609.png"
+              alt=""
+            />
+          </button>
+        </div>
+        {month && <CreateMonth />}
+        <div className="MonthSelector">
+          <h1 className="SectionTitle">Seguimiento De Venta Diaria</h1>
 
+          <div className="Selector">
+            <div className="SelectMP">
+              <label htmlFor="MonthSelector">Seleccione Mes:</label>
+              <select
+                name="Months"
+                id="MonthSelector"
+                onChange={(e) => {
+                  apimonth.getOne(e.target.value).then((res) => {
+                    setData(res);
+                  });
+                  // apiGetMonth(e.target.value)
+                  // .then((res) => {
+                  //   setData(res)
+                  // })
+                }}
+                value={data && data.id}
+              >
+                {Months &&
+                  Months.map((month, i) => (
+                    <option key={i} value={month.id}>
+                      {month.Mid}
+                    </option>
+                  ))}
+              </select>
+              <button onClick={() => setMonth(!month)}>
+                <img src="https://cdn-icons-png.flaticon.com/512/4421/4421540.png" />
+              </button>
+            </div>
 
-  if(!data) return "Cargando...."
-
-  return (
-    <div className="Container">
-      {month && (<CreateMonth />)}
-      <div className="MonthSelector">
-        <h1 className="SectionTitle">
-          Seguimiento De Venta Diaria
-        </h1>
-
-        <div className="Selector">
-          <div className="SelectMP">
-            <label htmlFor="MonthSelector">Seleccione Mes:</label>
-            <select
-              name="Months"
-              id="MonthSelector"
-              onChange={(e) => {
-                apiGetMonth(e.target.value)
-                .then((res) => {
-                  setData(res)
-                })
-              }}
-              value={data && data._id}
-            >
-              {Months &&
-                Months.map((month, i) => (
-                  <option key={i} value={month}>
-                    {month} 
-                  </option>
-                ))}
-            </select>
-            <button onClick={() => setMonth(!month)}>
-              <img src="https://cdn-icons-png.flaticon.com/512/4421/4421540.png"/>
-            </button>
-          </div>
-
-          <div className="SelectMP">
-            <label htmlFor="PercentageSelector">Porcentaje:</label>
-            <select
-              name="Months"
-              id="PercentageSelector"
-              onChange={(e) => {
-                setPercentage(e.target.value);
-              }}
-            >
-              <option value={1}>100%</option>
-              <option value={1.03}>103%</option>
-              <option value={1.06}>106%</option>
-              <option value={1.1}>110%</option>
-            </select>
+            <div className="SelectMP">
+              <label htmlFor="PercentageSelector">Porcentaje:</label>
+              <select
+                name="Months"
+                id="PercentageSelector"
+                onChange={(e) => {
+                  setPercentage(e.target.value);
+                }}
+              >
+                <option value={1}>100%</option>
+                <option value={1.03}>103%</option>
+                <option value={1.06}>106%</option>
+                <option value={1.1}>110%</option>
+              </select>
+            </div>
           </div>
         </div>
+
+        {!data ? (
+          <div className="NoData">
+            <h2>No hay meses aun</h2>
+          </div>
+        ) : (
+          <div className="Data">
+            <h1 className="SectionTitle">Resumen al dia</h1>
+
+            <Cards
+              data={data}
+              dataPercentage={dataPercentage}
+              percentage={percentage}
+            />
+
+            <h1 className="SectionTitle">Venta Diaria</h1>
+
+            <Calendar
+              data={data}
+              percentage={percentage}
+              days={dailyGoalC?.labels}
+            />
+
+            {chartState && <BarChart data={dailyGoalC} />}
+            <button
+              className="ChartButton"
+              onClick={() => {
+                setChartState(!chartState);
+              }}
+            >
+              Grafico
+            </button>
+          </div>
+        )}
       </div>
-
-      <h1 className="SectionTitle">Resumen al dia</h1>
-
-      <Cards data={data} dataPercentage={dataPercentage} percentage={percentage} />
-
-      <h1 className="SectionTitle">Venta Diaria</h1>
-
-      <Calendar data={data} percentage={percentage} days={dailyGoalC?.labels} />
-
-      {chartState && (<BarChart data={dailyGoalC} />)}
-      <button className="ChartButton" onClick={() => {
-        setChartState(!chartState)
-      }}> Grafico </button>
-    </div>
-  );
+    );
+  }
 }

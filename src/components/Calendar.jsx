@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import apiPutDailySale from "./api/putDailySale";
+import apimonth from "./api/month"
 
 export default function Calendar({data, percentage, days}) {
 
@@ -42,7 +42,12 @@ export default function Calendar({data, percentage, days}) {
                   e.target.Bonification.value
                 );
 
-                apiPutDailySale(dataToUpdate);
+                
+                apimonth.dailySale(dataToUpdate)
+                .then((res) => {
+                  console.log(res)
+                })
+                // apiPutDailySale(dataToUpdate);
               }}
             >
               <label htmlFor="SelledAtDay">Vta afecta: </label>

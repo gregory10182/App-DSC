@@ -1,5 +1,6 @@
 import React from "react";
 import postMonth from "./api/postMonth";
+import apimonth from "./api/month"
 
 
 export default function CreateMonth(){
@@ -36,7 +37,10 @@ export default function CreateMonth(){
                     "Goal" : e.target.Goal.value
                 }
 
-                postMonth(data)
+                apimonth.create(data)
+                .then((res) => {
+                    console.log(res);
+                })
             }}>
                 <label>Month: </label>
                 <input id="Month" type="number"/>
