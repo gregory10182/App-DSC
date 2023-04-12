@@ -235,7 +235,6 @@ export default function Container() {
               </select>
               <button onClick={() => {
                 setMonth(!month)
-                setMessage("Hola")
               }}>
                 <img src="https://cdn-icons-png.flaticon.com/512/4421/4421540.png" />
               </button>
