@@ -3,6 +3,7 @@ import updateDay from "./api/updateDay";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
 import BarChart from "./BarChart";
+import Alert from "./Alert";
 import CreateMonth from "./CreateMonth";
 import Login from "./Login";
 import apimonth from "./api/month";
@@ -18,10 +19,14 @@ export default function Container() {
   const [chartState, setChartState] = useState(false);
   const [month, setMonth] = useState(false);
   const [user, setUser] = useState("");
+  const [message, setMessage] = useState("");
+  const [alert, setAlert] = useState(false);
 
   const setUserLogin = (user) => {
     setUser(user);
   };
+
+  
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
@@ -32,17 +37,6 @@ export default function Container() {
       setUser(loggedUser);
 
       apimonth.setToken(loggedUser.token);
-
-      // apimonth.getAll().then((res) => {
-      //   let ids = res.map((month) => ({
-      //     Mid: month.mid,
-      //     id: month.id,
-      //   }));
-      //   setMonths(ids);
-      //   apimonth.getOne(ids[ids.length - 1].id).then((res) => {
-      //     setData(res);
-      //   });
-      // });
     }
   }, []);
 
@@ -74,6 +68,26 @@ export default function Container() {
   useEffect(() => {
     adjustPercentage();
   }, [percentage]);
+
+  useEffect(() => {
+    if (message != "") {
+      console.log(message)
+      setAlert(!alert);
+    }
+  }, [message]);
+
+  useEffect(() => {
+    console.log(alert)
+    if (alert === true) {
+    setTimeout(() => {
+        setAlert(!alert);
+      }, 5000);
+
+    setTimeout(() => {
+      setMessage("");
+    }, 6000);
+    }
+  }, [alert]);
 
   function adjustPercentage() {
     let MonthDays = new Date(data?.Year, data?.Month, 0).getDate();
@@ -191,7 +205,7 @@ export default function Container() {
             />
           </button>
         </div>
-        {month && <CreateMonth />}
+        {month && <CreateMonth setMessage={(Message) => setMessage(Message)} />}
         <div className="MonthSelector">
           <h1 className="SectionTitle">Seguimiento De Venta Diaria</h1>
 
@@ -219,7 +233,10 @@ export default function Container() {
                     </option>
                   ))}
               </select>
-              <button onClick={() => setMonth(!month)}>
+              <button onClick={() => {
+                setMonth(!month)
+                setMessage("Hola")
+              }}>
                 <img src="https://cdn-icons-png.flaticon.com/512/4421/4421540.png" />
               </button>
             </div>
@@ -262,6 +279,7 @@ export default function Container() {
               data={data}
               percentage={percentage}
               days={dailyGoalC?.labels}
+              setMessage={(Message) => setMessage(Message)}
             />
 
             {chartState && <BarChart data={dailyGoalC} />}
@@ -275,6 +293,7 @@ export default function Container() {
             </button>
           </div>
         )}
+        <Alert Alert={alert} Message={message} />
       </div>
     );
   }

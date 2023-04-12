@@ -1,15 +1,9 @@
 import React from "react";
-import postMonth from "./api/postMonth";
-import apimonth from "./api/month"
+import apimonth from "./api/month";
 
-
-export default function CreateMonth(){
-    
-
-    let date = new Date()
-    let year = date.getFullYear()
-
-    
+export default function CreateMonth({ setMessage }) {
+  let date = new Date();
+  let year = date.getFullYear();
 
   const MonthsArray = [
     "Enero",
@@ -26,29 +20,34 @@ export default function CreateMonth(){
     "Diciembre",
   ];
 
-    return(
-        <div className="CreateMonth">
-            <form onSubmit={(e) => {
-                e.preventDefault()
+  return (
+    <div className="CreateMonth">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
 
-                let data = {
-                    "Month" : e.target.Month.value,
-                    "Year" : year,
-                    "Goal" : e.target.Goal.value
-                }
+          let data = {
+            Month: e.target.Month.value,
+            Year: year,
+            Goal: e.target.Goal.value,
+          };
 
-                apimonth.create(data)
-                .then((res) => {
-                    console.log(res);
-                })
-            }}>
-                <label>Month: </label>
-                <input id="Month" type="number"/>
-                <label>Year: &nbsp; {year}</label>
-                <label htmlFor="Goal">Meta: </label>
-                <input id="Goal" type="number"/>
-                <input id="submit" type="submit" />
-            </form>
-        </div>
-    )
+          apimonth.create(data).then((res) => {
+            console.log(res);
+            setMessage(res);
+            setTimeout(() => {
+              window.location.reload();
+            }, 6000);
+          });
+        }}
+      >
+        <label>Month: </label>
+        <input id="Month" type="number" />
+        <label>Year: &nbsp; {year}</label>
+        <label htmlFor="Goal">Meta: </label>
+        <input id="Goal" type="number" />
+        <input id="submit" type="submit" />
+      </form>
+    </div>
+  );
 }

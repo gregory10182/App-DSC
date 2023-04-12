@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import apimonth from "./api/month"
 
-export default function Calendar({data, percentage, days}) {
+export default function Calendar({data, percentage, days, setMessage}) {
 
   
   const [month, setMonth] = useState(data);
@@ -46,6 +46,10 @@ export default function Calendar({data, percentage, days}) {
                 apimonth.dailySale(dataToUpdate)
                 .then((res) => {
                   console.log(res)
+                  setMessage(res)
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 6000);
                 })
                 // apiPutDailySale(dataToUpdate);
               }}
