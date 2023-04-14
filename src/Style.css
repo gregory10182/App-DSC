@@ -154,7 +154,7 @@
     gap: 5px;
     justify-content: center;
     grid-template-columns: repeat(2, 48% [col-start] );
-    grid-template-rows: repeat(14, 120px [row-start]);
+    grid-template-rows: repeat(14, 150px [row-start]);
 }
 
 .Calendar div{
@@ -172,11 +172,11 @@
 .Calendar .Report{
     display: grid;
     column-gap: 5px;
-    row-gap: 3px;
+    row-gap: 5px;
     justify-content: center;
     align-items: center;
     grid-template-columns: repeat(2, 50% [col-start]);
-    grid-template-rows: repeat(3, 33% [row-start]);
+    grid-template-rows: repeat(4, 22% [row-start]);
 }
 
 

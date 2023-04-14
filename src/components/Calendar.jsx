@@ -42,6 +42,10 @@ export default function Calendar({data, percentage, days, setMessage}) {
                   e.target.Bonification.value
                 );
 
+                dataToUpdate.DailySale[i].Recargas = parseInt(
+                  e.target.Recargas.value
+                );
+
                 
                 apimonth.dailySale(dataToUpdate)
                 .then((res) => {
@@ -61,6 +65,12 @@ export default function Calendar({data, percentage, days, setMessage}) {
                 id="Bonification"
                 type="number"
                 defaultValue={day.Bonificacion}
+              />
+              <label htmlFor="Recargas">Recargas: </label>
+              <input
+                id="Recargas"
+                type="number"
+                defaultValue={day.Recargas}
               />
               <input className="Submit" type="submit" value="Actualizar" />
             </form>
