@@ -56,4 +56,17 @@ const dailySale = month => {
 }
 
 
-export default { getAll, getOne, setToken, create, dailySale }
+const updateDay = id => {
+    const config = {
+        headers: {
+            Authorization: token
+        }
+    }
+
+    console.log(config)
+    const req = axios.put(baseurl + "UpdateDay/" + id, undefined, config)
+    return req.then(res => res.data)
+}
+
+
+export default { getAll, getOne, setToken, create, dailySale, updateDay }

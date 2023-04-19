@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import updateDay from "./api/updateDay";
 import Cards from "./Cards";
 import Calendar from "./Calendar";
 import BarChart from "./BarChart";
@@ -26,8 +25,6 @@ export default function Container() {
     setUser(user);
   };
 
-  
-
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedUser");
 
@@ -42,8 +39,18 @@ export default function Container() {
 
   useEffect(() => {
     adjustPercentage();
-    if (data?._id) {
-      updateDay(data?._id);
+    if (data?.id) {
+      let id = data.id;
+      console.log(id);
+      apimonth
+        .updateDay(data.id)
+        .then((res) => {
+          setMessage(res);
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [data]);
 
@@ -71,21 +78,21 @@ export default function Container() {
 
   useEffect(() => {
     if (message != "") {
-      console.log(message)
+      console.log(message);
       setAlert(!alert);
     }
   }, [message]);
 
   useEffect(() => {
-    console.log(alert)
+    console.log(alert);
     if (alert === true) {
-    setTimeout(() => {
+      setTimeout(() => {
         setAlert(!alert);
       }, 5000);
 
-    setTimeout(() => {
-      setMessage("");
-    }, 6000);
+      setTimeout(() => {
+        setMessage("");
+      }, 6000);
     }
   }, [alert]);
 
@@ -185,7 +192,11 @@ export default function Container() {
   ];
 
   if (user === "") {
-    return <Login setUser={setUserLogin} />;
+    return (
+      <div className="Container">
+        <Login setUser={setUserLogin} />
+      </div>
+    );
   } else {
     return (
       <div className="Container">
@@ -233,9 +244,11 @@ export default function Container() {
                     </option>
                   ))}
               </select>
-              <button onClick={() => {
-                setMonth(!month)
-              }}>
+              <button
+                onClick={() => {
+                  setMonth(!month);
+                }}
+              >
                 <img src="https://cdn-icons-png.flaticon.com/512/4421/4421540.png" />
               </button>
             </div>
