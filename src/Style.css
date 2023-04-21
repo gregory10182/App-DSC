@@ -159,12 +159,11 @@
     grid-template-columns: repeat(2, 50% [col-start] );
 }
 
-.Calendar div{
+.Calendar .Day{
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     background-color: #009635;
-    height: 20px;
     padding: 10px;
     row-gap: 10px;
     border-radius: 10px;
@@ -172,7 +171,16 @@
     /* transition: height 1s ease; */
 }
 
-.Calendar div button{
+.Calendar .MainData{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 20px;
+    padding: 0px;
+}
+
+.Calendar .Day button{
     display: flex;
     justify-content: center;
     align-items: center ;
@@ -221,10 +229,21 @@
 
 .Calendar div .DayOfTheWeek{
     text-align: left;
-    width: 42%;
+    width: 55%;
     height: 20px;
     font-size: 10px;
     margin: 0;
+}
+
+.Calendar .DataPercentage{
+    text-align: center;
+    width: 40%;
+}
+
+.Calendar .DailySelled{
+    width: 100%;
+    text-align: left;
+    margin-top: -2px;
 }
 
 .Calendar div p{
