@@ -40,13 +40,10 @@ export default function Container() {
   useEffect(() => {
     adjustPercentage();
     if (data?.id) {
-      let id = data.id;
-      console.log(id);
       apimonth
         .updateDay(data.id)
         .then((res) => {
           setMessage(res);
-          console.log(res);
         })
         .catch((err) => {
           console.log(err);
@@ -78,13 +75,11 @@ export default function Container() {
 
   useEffect(() => {
     if (message != "") {
-      console.log(message);
       setAlert(!alert);
     }
   }, [message]);
 
   useEffect(() => {
-    console.log(alert);
     if (alert === true) {
       setTimeout(() => {
         setAlert(!alert);

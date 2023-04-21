@@ -62,8 +62,7 @@ const updateDay = id => {
             Authorization: token
         }
     }
-
-    console.log(config)
+    
     const req = axios.put(baseurl + "UpdateDay/" + id, undefined, config)
     return req.then(res => res.data)
 }

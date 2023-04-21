@@ -16,9 +16,6 @@ export default function Alert({Alert, Message}) {
 
 
 
-    useEffect(() =>{
-        console.log(cName)
-    }, [cName])
     return(
         <div className={cName}>
             <p>{Message}</p>
