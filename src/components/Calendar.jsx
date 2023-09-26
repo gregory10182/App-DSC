@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
-import apimonth from "./api/month"
+import apimonth from "./api/month";
 import Day from "./Day";
 
-export default function Calendar({data, percentage, days, setMessage}) {
-  
-
+export default function Calendar({ data, percentage, days, setMessage }) {
   return (
     <div className="Calendar">
       {data?.DailySale &&
@@ -14,6 +12,7 @@ export default function Calendar({data, percentage, days, setMessage}) {
             day={day}
             dayW={days[i]}
             data={data}
+            Holiday={day.Festivo}
             percentage={percentage}
             handleSubmit={(e) => {
               e.preventDefault();

@@ -1,466 +1,610 @@
-.Container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    min-height: 100vh;
-    width: 100%;
-    height: 100%;
-    margin: 0px 5px;
+* {
+  margin: 0;
 }
 
-.Container .SectionTitle{
-    font-size: 21px;
-    margin-bottom: 0px;
-    color: #009635;
+.Container {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0px 0.5rem;
+  padding-bottom: 3rem;
 }
 
-.Cards{
-    display: grid;
-    width: 100%;
-    row-gap: 5px;
-    column-gap: 3px;
-    justify-content: center;
-    align-items: center;
-    grid-template-columns: repeat(3, 33% [col-start]);
-    grid-template-rows: repeat(3, 80px [row-start]);
+.SectionTitle {
+  font-size: 21px;
+  margin-bottom: 1rem;
+  color: #009635;
 }
 
 
-
-.DataCard{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    color: #ffffff;
-    background-color: #009635;
-    padding: 20px 5px;
-    border-radius: 15px;
+.SummaryPage{
+  width: 100%;
+  padding-bottom: 3rem;
 }
 
-.DataCard h1{
-    width: 100%;
-    font-size: 14px;
-    margin: 0;
+.CalendarPage{
+  width: 100%;
+  padding-bottom: 3rem;
 }
 
-.DataCard p{
-    width: 100%;
-    font-weight: 600;
-    color: #e9a42b;
-    height: 9px;
-    font-size: 8px;
-    margin: 0;
+.ChartsPage{
+  box-sizing: border-box;
+  width: 100%;
+  padding-bottom: 3rem;
 }
 
-.DataCard .gauge{
-    margin-top: -10px;
-    width: 100%;
-    height: 40px;
-}
-
-.MonthSelector{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    row-gap: 10px;
-    padding: 0px 10px 50px 10px;
-    width: 100%;
-    height: 100px;
-}
-
-.MonthSelector .Selector{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    padding: 10px 0px;
-    border-radius: 5px;
-    background-color: #009635;
-    color: #ffffff;
-}
-
-.SelectMP{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-}
-
-.SelectMP label{
-    width: 100%;
-}
-
-.SelectMP select{
-    width: 70px;
-    height: 30px;
-    border-radius: 5px;
-}
-
-.Selector button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25px;
-    height: 25px;
-    padding: 0;
-}
-
-.Selector button img{
-    width: 20px;
-    height: 20px;
-}
-
-.MonthSelector .MonthDisplay{
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    width: 100%;
-    padding: 13px 0px;
-    border-radius: 5px;
-    font-size: 25px;
-    font-weight: 700;
-    color: #009635;
-}
-
-.MonthDisplay p{
-    margin: 0;
-}
-
-
-.Data{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 100%;
-    row-gap: 20px;
-}
-
-.NoData{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 100%;
-}
-
-.NoData h2{
-    color: #009635;
-    height: 20px;
-}
-
-.Calendar{ 
-    display: grid;
-    width: 100%;
-    gap: 5px;
-    justify-content: center;
-    grid-template-columns: repeat(2, 50% [col-start] );
-}
-
-.Calendar .Day{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    background-color: #009635;
-    padding: 10px;
-    row-gap: 10px;
-    border-radius: 10px;
-    color: #ffffff;
-    /* transition: height 1s ease; */
-}
-
-.Calendar .MainData{
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    width: 80%;
-    height: 20px;
-    padding: 0px;
-}
-
-.Calendar .Day button{
-    display: flex;
-    justify-content: center;
-    align-items: center ;
-    width: 20px;
-    height: 20px;
-    border-radius: 5px;
-}
-
-.Calendar div button img{
-    width: 10px;
-    height: 10px;
-    transition: transform 0.5s;
-}
-
-
-.Calendar .Report{
-    display: grid;
-    column-gap: 5px;
-    row-gap: 5px;
-    justify-content: center;
-    align-items: center;
-    text-align: left;
-    grid-template-columns: repeat(2, 50% [col-start]);
-    grid-template-rows: repeat(4, 22% [row-start]);
+.Cards {
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  row-gap: 5px;
+  column-gap: 3px;
+  justify-content: center;
+  align-items: center;
+  grid-template-columns: repeat(3, 33% [col-start]);
+  grid-template-rows: repeat(3, 6rem [row-start]);
 }
 
 
 
-.Report input{
-    width: 95%;
-    height: 18px;
-    font-size: 9px;
-    border-radius: 5px;
-    border: none;
-    outline: none;
+.DataCard {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #ffffff;
+  background-color: #009635;
+  border-radius: 15px;
+  position: relative;
 }
 
-.Calendar div .Submit{
-    grid-column: 1 / 3;
-    border-radius: 10px;
-    width: 100%;
-    height: 20px;
-    font-size: 11px;
-    background-color: #eddf1c;
+.DataCard h1 {
+  width: 100%;
+  font-size: 14px;
+  margin: 0;
+  position: absolute;
+  top: 38%;
 }
 
-.Calendar div .DayOfTheWeek{
-    text-align: left;
-    width: 55%;
-    height: 20px;
-    font-size: 10px;
-    margin: 0;
+.DataCard p {
+  width: 100%;
+  height: 1rem;
+  font-weight: 600;
+  font-size: 0.6rem;
+  color: #e9a42b;
+  overflow: hidden;
+  vertical-align: middle;
+  position: absolute;
+  bottom: 1rem;
 }
 
-.Calendar .DataPercentage{
-    text-align: center;
-    width: 40%;
+.DataCard .gauge {
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  top: 15%;
 }
 
-.Calendar .DailySelled{
-    width: 100%;
-    text-align: left;
-    margin-top: -2px;
+.MonthSelector {
+  display: flex;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  row-gap: 0.625rem;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+  width: 100%;
+  height: 5%;
 }
 
-.Calendar div p{
-    text-align: center;
-    width: 42%;
-    height: 20px;
-    font-size: 10px;
-    margin: 0;
+.MonthSelector .Selector {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  padding: 10px 0px;
+  border-radius: 5px;
+  background-color: #009635;
+  color: #ffffff;
 }
 
-.Calendar div label{
-    width: 95%;
-    height: 20px;
-    font-size: 10px;
-    margin: 0;
+.SelectMP {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
-
-.Charts{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100% !important;
-    height: 400px !important;
+.SelectMP label {
+  width: 100%;
 }
 
-.ChartButton{
-    width: 85px;
-    height: 40px;
-    margin-bottom: 15px;
-    background-color: #009635;
-    color: #ffffff;
+.SelectMP select {
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
 }
 
-
-.CreateMonth{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    width: 70%;
-    height: 30%;
-    margin-top: -20%;
-    margin-left: -40%;
-    padding: 5px 10px;
-    top: 50%;
-    left: 50%;
-    border-radius: 10px;
-    border: 1px solid #e9a42b;
-    background-color: #009635;
-    z-index: 99;
+.Selector button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
 }
 
-.CreateMonth form{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+.Selector button img {
+  width: 20px;
+  height: 20px;
 }
 
-
-.CreateMonth label{
-    display: flex;
-    color: #ffffff;
-    width: 100%;
-    height: 25px;
-    font-size: 13px;
-    font-weight: 550;
-    margin-bottom: -10px;
+.MonthSelector .MonthDisplay {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  padding: 13px 0px;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: 700;
+  color: #009635;
 }
 
-.CreateMonth input{
-    width: 100%;
-    height: 25px;
-    outline: none;
-    border: none;
-    border-radius: 5px;
+.MonthDisplay p {
+  margin: 0;
 }
 
 
-.Login{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width: 200px;
-    height: 280px;
+.Data {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+  row-gap: 20px;
 }
 
-.Login h2{
-    color: #009635;
-    width: 100%;
-    height: 10%;
-    font-size: 20px;
-    margin-bottom: 0px;
+.NoData {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
 }
 
-.Login form{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: #009635;
-    padding: 10px;
-    border-radius: 10px;
-    align-items: center;
-    height: 50%;
-    width: 100%;
+.NoData h2 {
+  color: #009635;
+  height: 20px;
 }
 
-.Login input{
-    width: 85%;
-    height: 30px;
-    border-radius: 5px;
-    outline: none;
-    border: none;
-    color: #009635;
+.Calendar {
+  display: grid;
+  width: 100%;
+  row-gap: 5px;
+  column-gap: 2px;
+  justify-content: center;
+  grid-template-columns: repeat(2, 50% [col-start]);
+}
+
+.Calendar .Day {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #009635;
+  padding: 10px;
+  padding-top: 6px;
+  row-gap: 5px;
+  column-gap: 2px;
+  border-radius: 5px;
+  color: #ffffff;
+  /* transition: height 1s ease; */
+}
+
+.Calendar .MainData {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 80%;
+  height: 20px;
+  padding: 0px;
+}
+
+
+.Calendar .Festivo{
+  justify-content: flex-start !important;
+  align-items: center;
+}
+
+.Calendar .Day .Buttons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 2px;
+  align-items: center;
+  width: 18%;
+}
+
+.Calendar .Festivo .DayOfTheWeek{
+  width: 100%;
+}
+
+.Calendar .Day button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+}
+
+.Calendar div button img {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.5s;
+}
+
+
+.Calendar .Report {
+  display: grid;
+  column-gap: 5px;
+  row-gap: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  grid-template-columns: repeat(2, 50% [col-start]);
+  grid-template-rows: repeat(4, 22% [row-start]);
+}
+
+
+
+.Report input {
+  width: 95%;
+  height: 18px;
+  font-size: 9px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
+
+.Calendar div .Submit {
+  grid-column: 1 / 3;
+  border-radius: 10px;
+  width: 100%;
+  height: 20px;
+  font-size: 11px;
+  background-color: #eddf1c;
+}
+
+.Calendar div p {
+  height: 20px;
+}
+
+.Calendar div .DayOfTheWeek {
+  text-align: left;
+  width: 70%;
+  height: 20px;
+  font-size: 10px;
+  margin: 0;
+}
+
+.DayOfTheWeek p {
+  width: 100%;
+  margin: 0;
+}
+
+.Calendar .DailyPercentage {
+  text-align: center;
+  width: 30%;
+  font-size: 10px;
+  margin: 0;
+}
+
+.Calendar .DailySelled {
+  width: 100%;
+  text-align: left;
+  margin-top: -2px;
+  font-size: 10px;
+  margin: 0;
+}
+
+
+.Calendar div label {
+  width: 95%;
+  height: 20px;
+  font-size: 10px;
+  margin: 0;
+}
+
+
+.Charts {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100% !important;
+  height: 400px !important;
+}
+
+.ChartButton {
+  width: 85px;
+  height: 40px;
+  margin-bottom: 15px;
+  background-color: #009635;
+  color: #ffffff;
+}
+
+
+.CreateMonth {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 70%;
+  height: 30%;
+  margin-top: -20%;
+  margin-left: -40%;
+  padding: 5px 10px;
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  border: 1px solid #e9a42b;
+  background-color: #009635;
+  z-index: 99;
+}
+
+.CreateMonth form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+
+.CreateMonth label {
+  display: flex;
+  color: #ffffff;
+  width: 100%;
+  height: 25px;
+  font-size: 13px;
+  font-weight: 550;
+  margin-bottom: -10px;
+}
+
+.CreateMonth input {
+  width: 100%;
+  height: 25px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+}
+
+
+.Login {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 280px;
+}
+
+.Login h2 {
+  color: #009635;
+  width: 100%;
+  height: 10%;
+  font-size: 20px;
+  margin-bottom: 0px;
+}
+
+.Login form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #009635;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  height: 50%;
+  width: 100%;
+}
+
+.Login input {
+  width: 85%;
+  height: 30px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  color: #009635;
 
 }
 
-.Login button{
-    width: auto;
-    height: 30px;
-    color: #009635;
-    background-color: #EBEBEB;
-    font-size: 16px;
+.Login button {
+  width: auto;
+  height: 30px;
+  color: #009635;
+  background-color: #EBEBEB;
+  font-size: 16px;
 }
 
-.Login .crearCuentaBtn{
-    background-color: #009635;
-    color: #EBEBEB;
-    font-size: 16px;
-    width: 60%;
-    height: 12%;
+.Login .crearCuentaBtn {
+  background-color: #009635;
+  color: #EBEBEB;
+  font-size: 16px;
+  width: 60%;
+  height: 12%;
 }
 
 .logout {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    width: 100%;
-    height: 40px;
+  position: absolute;
+  top: 0.1rem;
+  right: -0.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: 40px;
 }
 
-.logout button{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30px;
-    width: 40px;
+.logout button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 40px;
 }
 
-.logout button img{
-    height: 30px;
-    width: 30px;
+.logout button img {
+  height: 30px;
+  width: 30px;
 }
 
 
-@keyframes smoothAppear{
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-}
-
-@keyframes smoothDisappear{
-    0% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
-    }
-}
-
-.Alert{
-    position: fixed;
-    top: 20px;
-    left: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@keyframes smoothAppear {
+  0% {
     opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
-.AlertEntrance{
-    position: fixed;
-    top: 20px;
-    left: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+@keyframes smoothDisappear {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
     opacity: 0;
-    width: auto;
-    padding: 0px 20px;
-    height: 30px;
-    border-radius: 10px;
-    background-color: #009635;
-    color: #EBEBEB;
-    animation: smoothAppear 1s ease 0s 1 normal forwards;
+  }
 }
 
-.AlertExit{
-    position: fixed;
-    top: 20px;
-    left: 10;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: auto;
-    padding: 0px 20px;
-    height: 30px;
-    border-radius: 10px;
-    background-color: #009635;
-    color: #EBEBEB;
-    animation: smoothDisappear 1s ease 0s 1 normal forwards;
+.Alert {
+  position: fixed;
+  top: 20px;
+  left: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
 }
 
+.AlertEntrance {
+  position: fixed;
+  top: 20px;
+  left: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  width: auto;
+  padding: 0px 20px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #009635;
+  color: #EBEBEB;
+  animation: smoothAppear 1s ease 0s 1 normal forwards;
+}
+
+.AlertExit {
+  position: fixed;
+  top: 20px;
+  left: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  padding: 0px 20px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: #009635;
+  color: #EBEBEB;
+  animation: smoothDisappear 1s ease 0s 1 normal forwards;
+}
+
+
+.DayOfTheWeek {
+  position: relative;
+}
+
+
+
+
+.ToolTip {
+  top: calc(-100% - 30px);
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #00CC47;
+  z-index: 1;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  position: absolute;
+  padding: 10px;
+  width: max-content;
+  height: fit-content;
+  min-width: 80px;
+  max-width: 120px;
+  max-height: 30px;
+}
+
+.ToolTip::after {
+  content: "";
+  display: block;
+  border-top: 10px solid #00CC47;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  position: absolute;
+  bottom: -7px;
+  left: calc(50% - 10px);
+}
+
+.ToolTip .ToolTipText {
+  text-align: center;
+  width: 100%;
+  height: fit-content;
+  max-width: 100px;
+  min-height: 20px;
+  max-height: 30px;
+  overflow: scroll;
+  word-wrap: break-word;
+  font-size: 12px;
+}
+
+.Menu{
+  background-color: #009635;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 70%;
+  height: 2rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding: 0.4rem;
+  padding-bottom: 0;
+  position: fixed;
+  bottom: 0;
+  border: 0.15rem solid #e9a42b;
+  border-bottom: none;
+}
+
+.Menu .MenuSelected{
+  filter: invert(77%) sepia(99%) saturate(6036%) hue-rotate(331deg) brightness(93%) contrast(98%);
+}
+
+.Menu button{
+  border-radius: 0;
+  background-color: transparent;
+  filter: invert(1);
+}

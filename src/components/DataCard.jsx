@@ -46,7 +46,7 @@ export default function DataCard(props) {
             : parseInt(Percentage) * 100 - parseInt(Data),
         ],
         cutout: 13,
-        borderColor: ["#ffffff","#ffffff"],
+        borderColor: ["#ffffff", "#ffffff"],
         backgroundColor: [
           parseInt(Data) < 50 ? "#DC0505" : "#009635",
           "#D6D6D6",
@@ -81,9 +81,9 @@ export default function DataCard(props) {
     return (
       <div className="DataCard">
         {parseInt(Data) < 0 ? (
-          <h1 style={{ color: "rgba(170, 5, 5, 1)", marginTop: 17 }}>{Data}</h1>
+          <h1 style={{ color: "rgba(170, 5, 5, 1)" }}>{Data}</h1>
         ) : (
-          <h1 style={{marginTop: 17}}>{Data}</h1>
+          <h1>{Data}</h1>
         )}
 
         <p>{Name}</p>
