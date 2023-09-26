@@ -7,6 +7,7 @@ export default function Day({
   data,
   percentage,
   handleSubmit,
+  handleInvalidDay,
   Holiday,
 }) {
   const [minimized, setMinimized] = useState(true);
@@ -54,7 +55,7 @@ export default function Day({
 
         <button
           onClick={() => {
-            console.log(Holiday);
+            handleInvalidDay();
           }}
         >
           <img src={Holiday ? "./eye.svg" : "./eye-off.svg"} alt="" />
@@ -103,7 +104,7 @@ export default function Day({
           </button>
           <button
             onClick={() => {
-              console.log(Holiday);
+              handleInvalidDay();
             }}
           >
             <img src={Holiday ? "./eye.svg" : "./eye-off.svg"} alt="" />

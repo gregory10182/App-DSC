@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// const baseurl = 'http://localhost:8080/'
+const baseurl = "http://localhost:8080/";
 // const baseurl = "https://cd-q3eh.onrender.com/";
-const baseurl = "https://sventasapi.gregorypf.site/";
+// const baseurl = "https://sventasapi.gregorypf.site/";
 
 let token = null;
 
@@ -45,14 +45,14 @@ const create = (month) => {
   return req.then((res) => res.data);
 };
 
-const dailySale = (month) => {
+const ModifyDay = (month) => {
   const config = {
     headers: {
       Authorization: token,
     },
   };
 
-  const req = axios.put(baseurl + "DailySale/", month, config);
+  const req = axios.put(baseurl + "ModifyDay/", month, config);
   return req.then((res) => res.data);
 };
 
@@ -67,4 +67,22 @@ const updateDay = (id) => {
   return req.then((res) => res.data);
 };
 
-export default { getAll, getOne, setToken, create, dailySale, updateDay };
+// const switchValidDay = (month) => {
+//   const config = {
+//     headers: {
+//       Authorization: token,
+//     },
+//   };
+
+//   const req = axios.put(baseurl + "DailySale/", month, config);
+//   return req.then((res) => res.data);
+// };
+
+export default {
+  getAll,
+  getOne,
+  setToken,
+  create,
+  ModifyDay,
+  updateDay,
+};

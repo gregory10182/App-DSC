@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import apimonth from "./api/month";
 import Day from "./Day";
+import { useNavigate } from "react-router-dom";
 
 export default function Calendar({ data, percentage, days, setMessage }) {
+  const navigate = useNavigate();
+
   return (
     <div className="Calendar">
       {data?.DailySale &&
@@ -30,12 +33,28 @@ export default function Calendar({ data, percentage, days, setMessage }) {
                 e.target.Recargas.value
               );
 
-              apimonth.dailySale(dataToUpdate).then((res) => {
+              apimonth.ModifyDay(dataToUpdate).then((res) => {
                 console.log(res);
                 setMessage(res);
                 setTimeout(() => {
-                  window.location.reload();
-                }, 6000);
+                  navigate(0);
+                }, 3000);
+              });
+            }}
+            handleInvalidDay={() => {
+              let dataToUpdate = data;
+
+              dataToUpdate.DailySale[i].Festivo =
+                !dataToUpdate.DailySale[i].Festivo;
+
+              console.log(dataToUpdate);
+
+              apimonth.ModifyDay(dataToUpdate).then((res) => {
+                setMessage(res);
+
+                setTimeout(() => {
+                  navigate(0);
+                }, 3000);
               });
             }}
           />
