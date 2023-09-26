@@ -1,7 +1,7 @@
 import "./App.css";
 import "./Style.css";
 import Header from "./components/Header.jsx";
-import Menu from "./components/menu";
+import Menu from "./components/menu.jsx";
 import Alert from "./components/Alert.jsx";
 import Login from "./components/Login.jsx";
 import { useState, useEffect } from "react";
