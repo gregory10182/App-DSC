@@ -4,6 +4,7 @@ import Header from "./components/Header.jsx";
 import Menu from "./components/Menu.jsx";
 import Alert from "./components/Alert.jsx";
 import Login from "./components/Login.jsx";
+import CreateMonth from "./components/CreateMonth";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import {
@@ -14,8 +15,10 @@ import {
   messageContext,
   dailyGoalCContext,
   userContext,
+  newMonthContext,
 } from "./context/dataContext";
 import apimonth from "./components/api/month";
+// import Container from "./components/Container";
 
 //pages
 import Summary from "./pages/Summary";
@@ -29,7 +32,7 @@ function App() {
   const [percentage, setPercentage] = useState(1);
   const [dailyGoalC, setDailyGoalC] = useState();
   const [chartState, setChartState] = useState(false);
-
+  const [month, setMonth] = useState(false);
   const [user, setUser] = useState("");
   const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(false);
@@ -220,14 +223,21 @@ function App() {
                     value={{ dailyGoalC, setDailyGoalC }}
                   >
                     <userContext.Provider value={{ user, setUser }}>
-                      <Header />
-                      <Routes>
-                        <Route path="/" element={<Summary />} />
-                        <Route path="/calendar" element={<CalendarPage />} />
-                        <Route path="/charts" element={<ChartsPage />} />
-                      </Routes>
-                      <Menu />
-                      <Alert Alert={alert} Message={message} />
+                      <newMonthContext.Provider value={{ month, setMonth }}>
+                        {month && (
+                          <CreateMonth
+                            setMessage={(Message) => setMessage(Message)}
+                          />
+                        )}
+                        <Header />
+                        <Routes>
+                          <Route path="/" element={<Summary />} />
+                          <Route path="/calendar" element={<CalendarPage />} />
+                          <Route path="/charts" element={<ChartsPage />} />
+                        </Routes>
+                        <Menu />
+                        <Alert Alert={alert} Message={message} />
+                      </newMonthContext.Provider>
                     </userContext.Provider>
                   </dailyGoalCContext.Provider>
                 </messageContext.Provider>

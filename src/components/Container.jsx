@@ -211,7 +211,7 @@ export default function Container() {
             />
           </button>
         </div>
-        {month && <CreateMonth setMessage={(Message) => setMessage(Message)} />}
+
         <div className="MonthSelector">
           <h1 className="SectionTitle">Seguimiento De Venta Diaria</h1>
 

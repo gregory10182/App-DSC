@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import {
   dataContext,
   monthsContext,
@@ -8,11 +8,10 @@ import {
 import apimonth from "./api/month";
 
 export default function Header() {
-  const [month, setMonth] = useState(false);
-
   const { data, setData } = useContext(dataContext);
   const { percentage, setPercentage } = useContext(percentageContext);
   const { Months } = useContext(monthsContext);
+  const { month, setMonth } = useContext(newMonthContext);
 
   return (
     <div className="MonthSelector">
