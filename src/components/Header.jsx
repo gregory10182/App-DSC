@@ -1,12 +1,15 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {
   dataContext,
   monthsContext,
+  newMonthContext,
   percentageContext,
 } from "../context/dataContext";
 import apimonth from "./api/month";
 
 export default function Header() {
+  const [month, setMonth] = useState(false);
+
   const { data, setData } = useContext(dataContext);
   const { percentage, setPercentage } = useContext(percentageContext);
   const { Months } = useContext(monthsContext);

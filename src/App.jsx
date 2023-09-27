@@ -16,7 +16,6 @@ import {
   userContext,
 } from "./context/dataContext";
 import apimonth from "./components/api/month";
-// import Container from "./components/Container";
 
 //pages
 import Summary from "./pages/Summary";
@@ -30,7 +29,7 @@ function App() {
   const [percentage, setPercentage] = useState(1);
   const [dailyGoalC, setDailyGoalC] = useState();
   const [chartState, setChartState] = useState(false);
-  const [month, setMonth] = useState(false);
+
   const [user, setUser] = useState("");
   const [message, setMessage] = useState("");
   const [alert, setAlert] = useState(false);
