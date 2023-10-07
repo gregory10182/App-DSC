@@ -1,28 +1,59 @@
 import React from "react";
 import apimonth from "./api/month";
+import styled from "styled-components";
+
+const StyledCreateMonth = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  width: 14rem;
+  height: 30%;
+  margin-top: -20%;
+  margin-left: -7.5rem;
+  padding: 1rem;
+  top: 50%;
+  left: 50%;
+  border-radius: 10px;
+  border: 1px solid #e9a42b;
+  background-color: #009635;
+  z-index: 99;
+`;
+
+const CreateMonthForm = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+const StyledLabel = styled.label`
+  display: flex;
+  color: #ffffff;
+  width: 100%;
+  height: 25px;
+  font-size: 13px;
+  font-weight: 550;
+  margin-bottom: -10px;
+`;
+
+const StyledInput = styled.input`
+  width: 100%;
+  height: 25px;
+  outline: none;
+  border: none;
+  border-radius: 5px;
+`;
 
 export default function CreateMonth({ setMessage }) {
   let date = new Date();
   let year = date.getFullYear();
 
-  const MonthsArray = [
-    "Enero",
-    "Febrero",
-    "Marzo",
-    "Abril",
-    "Mayo",
-    "Junio",
-    "Julio",
-    "Agosto",
-    "Septiembre",
-    "Octubre",
-    "Noviembre",
-    "Diciembre",
-  ];
-
   return (
-    <div className="CreateMonth">
-      <form
+    <StyledCreateMonth>
+      <CreateMonthForm
         onSubmit={(e) => {
           e.preventDefault();
 
@@ -41,13 +72,13 @@ export default function CreateMonth({ setMessage }) {
           });
         }}
       >
-        <label>Month: </label>
-        <input id="Month" type="number" />
-        <label>Year: &nbsp; {year}</label>
-        <label htmlFor="Goal">Meta: </label>
-        <input id="Goal" type="number" />
-        <input id="submit" type="submit" />
-      </form>
-    </div>
+        <StyledLabel>Month: </StyledLabel>
+        <StyledInput id="Month" type="number" />
+        <StyledLabel>Year: &nbsp; {year}</StyledLabel>
+        <StyledLabel htmlFor="Goal">Meta: </StyledLabel>
+        <StyledInput id="Goal" type="number" />
+        <StyledInput id="submit" type="submit" />
+      </CreateMonthForm>
+    </StyledCreateMonth>
   );
 }

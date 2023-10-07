@@ -2,12 +2,22 @@ import React from "react";
 import apimonth from "./api/month";
 import Day from "./Day";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
+
+const StyledCalendar = styled.div`
+  display: grid;
+  width: 100%;
+  row-gap: 5px;
+  column-gap: 2px;
+  justify-content: center;
+  grid-template-columns: repeat(2, 50% [col-start]);
+`;
 
 export default function Calendar({ data, percentage, days, setMessage }) {
   const navigate = useNavigate();
 
   return (
-    <div className="Calendar">
+    <StyledCalendar>
       {data?.DailySale &&
         data?.DailySale.map((day, i) => (
           <Day
@@ -59,6 +69,6 @@ export default function Calendar({ data, percentage, days, setMessage }) {
             }}
           />
         ))}
-    </div>
+    </StyledCalendar>
   );
 }

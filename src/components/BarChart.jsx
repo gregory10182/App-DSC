@@ -1,15 +1,20 @@
 import React from "react";
+import styled from "styled-components";
 
 // Charts
-import Chart from 'chart.js/auto';
+import Chart from "chart.js/auto";
 
 import { Bar } from "react-chartjs-2";
 
-export default function BarChart({data}) {
+const StyledCharts = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100% !important;
+  height: 400px !important;
+`;
 
-
-
-
+export default function BarChart({ data }) {
   const options = {
     responsive: true,
     plugins: {
@@ -40,12 +45,7 @@ export default function BarChart({data}) {
     },
   };
 
-
   return (
-    <div className="Charts">
-      {data && <Bar options={options} data={data} />}
-
-      
-    </div>
+    <StyledCharts>{data && <Bar options={options} data={data} />}</StyledCharts>
   );
 }

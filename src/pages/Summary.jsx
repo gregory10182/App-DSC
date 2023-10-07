@@ -5,6 +5,7 @@ import {
   dataPercentageContext,
   percentageContext,
 } from "../context/dataContext";
+import { Page, SectionTitle } from "./styled.js";
 
 export default function Summary() {
   const { data } = useContext(dataContext);
@@ -12,13 +13,13 @@ export default function Summary() {
   const { percentage } = useContext(percentageContext);
 
   return (
-    <div className="SummaryPage">
-      <h1 className="SectionTitle">Resumen al dia</h1>
+    <Page>
+      <SectionTitle>Resumen al dia</SectionTitle>
       <Cards
         data={data}
         dataPercentage={dataPercentage}
         percentage={percentage}
       />
-    </div>
+    </Page>
   );
 }

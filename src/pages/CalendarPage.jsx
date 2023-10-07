@@ -6,6 +6,7 @@ import {
   messageContext,
   percentageContext,
 } from "../context/dataContext.js";
+import { Page, SectionTitle } from "./styled.js";
 
 export default function CalendarPage() {
   const { data } = useContext(dataContext);
@@ -14,8 +15,8 @@ export default function CalendarPage() {
   const { dailyGoalC } = useContext(dailyGoalCContext);
 
   return (
-    <div className="CalendarPage">
-      <h1 className="SectionTitle">Venta Diaria</h1>
+    <Page>
+      <SectionTitle>Venta Diaria</SectionTitle>
 
       <Calendar
         data={data}
@@ -23,6 +24,6 @@ export default function CalendarPage() {
         days={dailyGoalC?.labels}
         setMessage={(Message) => setMessage(Message)}
       />
-    </div>
+    </Page>
   );
 }

@@ -6,6 +6,40 @@ import {
   userContext,
 } from "../context/dataContext";
 import apimonth from "./api/month";
+import styled from "styled-components";
+
+const StyledMenu = styled.div`
+  background-color: #009635;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 60%;
+  height: 2rem;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+  padding: 0.6rem;
+  padding-bottom: 0;
+  position: fixed;
+  bottom: 0;
+  border: 0.15rem solid #e9a42b;
+  border-bottom: none;
+
+  & .MenuSelected {
+    filter: invert(77%) sepia(99%) saturate(6036%) hue-rotate(331deg)
+      brightness(93%) contrast(98%);
+  }
+
+  & button {
+    border-radius: 0;
+    background-color: transparent;
+    filter: invert(1);
+  }
+
+  @media only screen and (min-width: 768px) {
+    width: 70%;
+    height: 2.5rem;
+  }
+`;
 
 export default function Menu() {
   const { setUser } = useContext(userContext);
@@ -15,7 +49,7 @@ export default function Menu() {
   const location = useLocation();
 
   return (
-    <div className={"Menu"}>
+    <StyledMenu>
       <Link to={"/"}>
         <button className={`${location.pathname === "/" && "MenuSelected"}`}>
           <svg
@@ -114,6 +148,6 @@ export default function Menu() {
           <path d="M18 15l3 -3"></path>
         </svg>
       </button>
-    </div>
+    </StyledMenu>
   );
 }

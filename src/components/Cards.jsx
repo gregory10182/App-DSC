@@ -1,9 +1,25 @@
 import React from "react";
 import DataCard from "./DataCard";
+import styled from "styled-components";
+
+const StyledCards = styled.div`
+  box-sizing: border-box;
+  display: grid;
+  width: 100%;
+  gap: clamp(0.2rem, 1%, 2rem);
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: repeat(3, 0.5fr [col-start]);
+
+  @media only screen and (min-width: 768px) {
+    width: 90%;
+    gap: 0.5rem;
+  }
+`;
 
 export default function Cards({ data, dataPercentage, percentage }) {
   return (
-    <div className="Cards">
+    <StyledCards>
       <DataCard Name="Meta" Data={dataPercentage?.Goal.toLocaleString()} />
       <DataCard
         Name="Meta Diaria"
@@ -38,6 +54,6 @@ export default function Cards({ data, dataPercentage, percentage }) {
         Type="percentage"
         Data={dataPercentage?.TotalPercentage}
       />
-    </div>
+    </StyledCards>
   );
 }

@@ -1,5 +1,125 @@
 import React, { useEffect, useState } from "react";
 import ToolTip from "./ToolTip";
+import styled from "styled-components";
+
+const StyledDay = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #009635;
+  padding: 10px;
+  padding-top: 6px;
+  row-gap: 5px;
+  column-gap: 2px;
+  border-radius: 5px;
+  color: #ffffff;
+`;
+
+const MainData = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 80%;
+  height: max-content;
+  padding: 0px;
+`;
+
+const HolidayData = styled(MainData)`
+  justify-content: flex-start !important;
+  align-items: center;
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 2px;
+  align-items: center;
+  width: 18%;
+`;
+
+const DayOfTheWeek = styled.p`
+  width: 100%;
+  text-align: left;
+  width: 70%;
+  height: 20px;
+  font-size: 10px;
+  margin: 0;
+`;
+
+const StyledButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+
+  & img {
+    width: 10px;
+    height: 10px;
+    transition: transform 0.5s;
+  }
+`;
+
+const ReportForm = styled.form`
+  display: grid;
+  column-gap: 5px;
+  row-gap: 5px;
+  justify-content: center;
+  align-items: center;
+  text-align: left;
+  grid-template-columns: repeat(2, 50% [col-start]);
+  grid-template-rows: repeat(4, 22% [row-start]);
+`;
+
+const StyledInput = styled.input`
+  width: 95%;
+  height: 18px;
+  font-size: 9px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+`;
+
+const SubmitButton = styled.input`
+  grid-column: 1 / 3;
+  border-radius: 10px;
+  width: 100%;
+  height: 20px;
+  font-size: 11px;
+  background-color: #eddf1c;
+  outline: none;
+  border: none;
+`;
+
+const DailyPercentage = styled.div`
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 20px;
+  font-size: 10px;
+  margin: 0;
+`;
+
+const DailySelled = styled.p`
+  width: 100%;
+  height: 20px;
+  text-align: left;
+  margin-top: -2px;
+  font-size: 10px;
+  margin: 0;
+`;
+
+const StyledLabel = styled.label`
+  width: 95%;
+  height: 20px;
+  font-size: 10px;
+  margin: 0;
+`;
 
 export default function Day({
   day,
@@ -46,29 +166,29 @@ export default function Day({
 
   if (Holiday) {
     return (
-      <div className="Day" style={minimize}>
-        <div className="MainData Festivo">
-          <p className="DayOfTheWeek">{dayW}</p>
+      <StyledDay style={minimize}>
+        <HolidayData>
+          <DayOfTheWeek>{dayW}</DayOfTheWeek>
 
-          <p className="DailySelled">Festivo</p>
-        </div>
+          <DailySelled>Festivo</DailySelled>
+        </HolidayData>
 
-        <button
+        <StyledButton
           onClick={() => {
             handleInvalidDay();
           }}
         >
           <img src={Holiday ? "./eye.svg" : "./eye-off.svg"} alt="" />
-        </button>
-      </div>
+        </StyledButton>
+      </StyledDay>
     );
   } else {
     return (
-      <div className="Day" style={minimize}>
-        <div className="MainData">
-          <p className="DayOfTheWeek">{dayW}</p>
+      <StyledDay style={minimize}>
+        <MainData>
+          <DayOfTheWeek>{dayW}</DayOfTheWeek>
 
-          <ToolTip classN="DailyPercentage" text="Porcentaje Diario">
+          <DailyPercentage>
             <p>
               {(
                 ((day.Venta + day.Bonificacion / 1.19 + day.Recargas) /
@@ -79,19 +199,19 @@ export default function Day({
                 .toLocaleString()}
               %
             </p>
-          </ToolTip>
+          </DailyPercentage>
 
-          <p className="DailySelled">
+          <DailySelled>
             {(
               day.Venta +
               day.Bonificacion / 1.19 +
               day.Recargas
             ).toLocaleString("es", { style: "currency", currency: "CLP" })}
-          </p>
-        </div>
+          </DailySelled>
+        </MainData>
 
-        <div className="Buttons">
-          <button
+        <Buttons>
+          <StyledButton
             onClick={() => {
               setMinimized(!minimized);
             }}
@@ -101,34 +221,41 @@ export default function Day({
               src="https://cdn-icons-png.flaticon.com/512/25/25243.png"
               alt=""
             />
-          </button>
-          <button
+          </StyledButton>
+          <StyledButton
             onClick={() => {
               handleInvalidDay();
             }}
           >
             <img src={Holiday ? "./eye.svg" : "./eye-off.svg"} alt="" />
-          </button>
-        </div>
+          </StyledButton>
+        </Buttons>
 
-        <form
-          className="Report"
+        <ReportForm
           style={minimized ? hideForm : showForm}
           onSubmit={(e) => handleSubmit(e)}
         >
-          <label htmlFor="SelledAtDay">Vta afecta: </label>
-          <input id="SelledAtDay" type="number" defaultValue={day.Venta} />
-          <label htmlFor="Bonification">Bonificación: </label>
-          <input
+          <StyledLabel htmlFor="SelledAtDay">Vta afecta: </StyledLabel>
+          <StyledInput
+            id="SelledAtDay"
+            type="number"
+            defaultValue={day.Venta}
+          />
+          <StyledLabel htmlFor="Bonification">Bonificación: </StyledLabel>
+          <StyledInput
             id="Bonification"
             type="number"
             defaultValue={day.Bonificacion}
           />
-          <label htmlFor="Recargas">Recargas: </label>
-          <input id="Recargas" type="number" defaultValue={day.Recargas} />
-          <input className="Submit" type="submit" value="Actualizar" />
-        </form>
-      </div>
+          <StyledLabel htmlFor="Recargas">Recargas: </StyledLabel>
+          <StyledInput
+            id="Recargas"
+            type="number"
+            defaultValue={day.Recargas}
+          />
+          <SubmitButton className="Submit" type="submit" value="Actualizar" />
+        </ReportForm>
+      </StyledDay>
     );
   }
 }

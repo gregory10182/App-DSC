@@ -1,5 +1,6 @@
 import "./App.css";
 import "./Style.css";
+import GlobalStyle from "./GlobalStyle";
 import Header from "./components/Header.jsx";
 import Menu from "./components/Menu.jsx";
 import Alert from "./components/Alert.jsx";
@@ -7,6 +8,7 @@ import Login from "./components/Login.jsx";
 import CreateMonth from "./components/CreateMonth";
 import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import styled from "styled-components";
 import {
   dataContext,
   monthsContext,
@@ -24,6 +26,31 @@ import apimonth from "./components/api/month";
 import Summary from "./pages/Summary";
 import CalendarPage from "./pages/CalendarPage";
 import ChartsPage from "./pages/ChartsPage";
+
+const Container = styled.div`
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-content: flex-start;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  margin: 0px 0.5rem;
+  padding-bottom: 3rem;
+
+  @media only screen and (min-width: 375px) {
+    margin: 0 1rem;
+  }
+
+  @media only screen and (min-width: 425px) {
+    margin: 0 2rem;
+  }
+
+  @media only screen and (min-width: 768px) {
+    margin: 0 4rem;
+  }
+`;
 
 function App() {
   const [data, setData] = useState();
@@ -204,14 +231,11 @@ function App() {
   ];
 
   if (user === "") {
-    return (
-      <div className="Container">
-        <Login setUser={setUserLogin} />
-      </div>
-    );
+    return <Login setUser={setUserLogin} />;
   } else {
     return (
-      <div className="Container">
+      <Container>
+        <GlobalStyle />
         <dataContext.Provider value={{ data, setData }}>
           <monthsContext.Provider value={{ Months, setMonths }}>
             <dataPercentageContext.Provider
@@ -245,9 +269,7 @@ function App() {
             </dataPercentageContext.Provider>
           </monthsContext.Provider>
         </dataContext.Provider>
-      </div>
-
-      // <Container />
+      </Container>
     );
   }
 }

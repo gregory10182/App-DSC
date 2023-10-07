@@ -11,6 +11,49 @@ import {
   ArcElement,
 } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import styled from "styled-components";
+
+const StyledDataCard = styled.div`
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  color: #ffffff;
+  background-color: #009635;
+  border-radius: 1rem;
+  position: relative;
+`;
+
+const DataCardTitle = styled.p`
+  width: 100%;
+  margin: 0;
+  height: 1rem;
+  font-weight: 600;
+  font-size: clamp(0.5rem, 2%, 2rem);
+  color: #e9a42b;
+  overflow: hidden;
+  vertical-align: middle;
+  position: absolute;
+  bottom: 1rem;
+`;
+
+const DataCardContent = styled.h1`
+  width: 100%;
+  font-size: 14px;
+  margin: 0;
+  position: absolute;
+  top: 38%;
+`;
+
+const DataCardGauge = styled.div`
+  width: 100%;
+  height: 40px;
+  position: absolute;
+  top: 15%;
+`;
 
 export default function DataCard(props) {
   const { Type, Percentage, Name, Data, Img } = props;
@@ -79,25 +122,27 @@ export default function DataCard(props) {
 
   if (!Type) {
     return (
-      <div className="DataCard">
+      <StyledDataCard>
         {parseInt(Data) < 0 ? (
-          <h1 style={{ color: "rgba(170, 5, 5, 1)" }}>{Data}</h1>
+          <DataCardContent style={{ color: "rgba(170, 5, 5, 1)" }}>
+            {Data}
+          </DataCardContent>
         ) : (
-          <h1>{Data}</h1>
+          <DataCardContent>{Data}</DataCardContent>
         )}
 
-        <p>{Name}</p>
-      </div>
+        <DataCardTitle>{Name}</DataCardTitle>
+      </StyledDataCard>
     );
   } else if (Type === "percentage") {
     return (
-      <div className="DataCard">
-        <div className="gauge">
+      <StyledDataCard>
+        <DataCardGauge>
           <Doughnut options={options} data={GaugeData} plugins={[GaugeText]} />
-        </div>
+        </DataCardGauge>
 
-        <p>{Name}</p>
-      </div>
+        <DataCardTitle>{Name}</DataCardTitle>
+      </StyledDataCard>
     );
   }
 }

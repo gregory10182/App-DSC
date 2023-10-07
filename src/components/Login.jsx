@@ -1,7 +1,70 @@
 import React, { useState } from "react";
 import apiUser from "./api/login";
+import styled from "styled-components";
 
-export default function Login({setUser}) {
+const LoginContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+`;
+
+const StyledLogin = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 280px;
+`;
+
+const LoginTitle = styled.h2`
+  color: #009635;
+  width: 100%;
+  height: 10%;
+  font-size: 20px;
+  margin-bottom: 0px;
+`;
+
+const LoginForm = styled.form`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background-color: #009635;
+  padding: 10px;
+  border-radius: 10px;
+  align-items: center;
+  height: 50%;
+  width: 100%;
+`;
+
+const LoginInput = styled.input`
+  width: 85%;
+  height: 30px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  color: #009635;
+`;
+
+const LoginSubmit = styled.button`
+  width: auto;
+  height: 30px;
+  color: #009635;
+  background-color: #ebebeb;
+  font-size: 16px;
+`;
+
+const ChangeFormBtn = styled.button`
+  background-color: #009635;
+  color: #ebebeb;
+  font-size: 16px;
+  width: 60%;
+  height: 12%;
+`;
+
+export default function Login({ setUser }) {
   const [local, setLocal] = useState("");
   const [password, setPassword] = useState("");
   const [nuevaCuenta, setNuevaCuenta] = useState(false);
@@ -29,18 +92,18 @@ export default function Login({setUser}) {
     e.preventDefault();
 
     apiUser
-    .signin({
-      local,
-      password
-    })
-    .then((res) => {
-      console.log(res)
-    })
+      .signin({
+        local,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+      });
   };
 
   const renderLogin = () => (
-    <form onSubmit={handleSubmit}>
-      <input
+    <LoginForm onSubmit={handleSubmit}>
+      <LoginInput
         type="text"
         id="Local"
         value={local}
@@ -49,7 +112,7 @@ export default function Login({setUser}) {
         onChange={({ target }) => setLocal(target.value)}
       />
 
-      <input
+      <LoginInput
         type="password"
         value={password}
         name="Password"
@@ -57,13 +120,13 @@ export default function Login({setUser}) {
         onChange={({ target }) => setPassword(target.value)}
       />
 
-      <button>Login</button>
-    </form>
+      <LoginSubmit>Login</LoginSubmit>
+    </LoginForm>
   );
 
   const renderRegister = () => (
-    <form onSubmit={handleRegister}>
-      <input
+    <LoginForm onSubmit={handleRegister}>
+      <LoginInput
         type="text"
         id="Local"
         value={local}
@@ -72,7 +135,7 @@ export default function Login({setUser}) {
         onChange={({ target }) => setLocal(target.value)}
       />
 
-      <input
+      <LoginInput
         type="password"
         value={password}
         name="Password"
@@ -80,26 +143,25 @@ export default function Login({setUser}) {
         onChange={({ target }) => setPassword(target.value)}
       />
 
-      <button>Crear Cuenta</button>
-    </form>
-
+      <LoginSubmit>Crear Cuenta</LoginSubmit>
+    </LoginForm>
   );
 
   return (
-    <div className="Login">
-      <h2>{nuevaCuenta ? "Registro" : "Inicio de Sesion" }</h2>
-      {nuevaCuenta ? renderRegister() : renderLogin()}
+    <LoginContainer>
+      <StyledLogin>
+        <LoginTitle>{nuevaCuenta ? "Registro" : "Inicio de Sesion"}</LoginTitle>
+        {nuevaCuenta ? renderRegister() : renderLogin()}
 
-      <button
-        className="crearCuentaBtn"
-        onClick={() => {
-          setNuevaCuenta(!nuevaCuenta);
-        }}
-      >
-        {nuevaCuenta ? "Iniciar Sesion" : "Crear Cuenta"}
-      </button>
-    </div>
+        <ChangeFormBtn
+          className="crearCuentaBtn"
+          onClick={() => {
+            setNuevaCuenta(!nuevaCuenta);
+          }}
+        >
+          {nuevaCuenta ? "Iniciar Sesion" : "Crear Cuenta"}
+        </ChangeFormBtn>
+      </StyledLogin>
+    </LoginContainer>
   );
-  
-  
 }
