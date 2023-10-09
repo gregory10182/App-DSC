@@ -4,15 +4,25 @@ import styled from "styled-components";
 
 const StyledDay = styled.div`
   display: flex;
+  height: ${(props) => (props.$minimized === "true" ? `2.5rem` : `8.75rem`)};
   justify-content: center;
   flex-wrap: wrap;
   background-color: #009635;
-  padding: 10px;
-  padding-top: 6px;
+  padding: 0.8rem 0.625rem;
+  padding-top: 0.375rem;
   row-gap: 5px;
   column-gap: 2px;
   border-radius: 5px;
   color: #ffffff;
+  transition: ${(props) =>
+    props.$minimized === "true" ? `all 1s ease 0.5s` : `all 1s ease`};
+
+  @media only screen and (min-width: 768px) {
+    height: ${(props) => (props.$minimized === "true" ? `3rem` : `10rem`)};
+    padding: ${(props) =>
+      props.$minimized === "true" ? `0.3rem 1rem` : `0.8rem 1rem`};
+    padding-top: 0.4rem;
+  }
 `;
 
 const MainData = styled.div`
@@ -37,6 +47,11 @@ const Buttons = styled.div`
   row-gap: 2px;
   align-items: center;
   width: 18%;
+
+  @media only screen and (min-width: 768px) {
+    flex-direction: column;
+    align-content: flex-end;
+  }
 `;
 
 const DayOfTheWeek = styled.p`
@@ -44,27 +59,39 @@ const DayOfTheWeek = styled.p`
   text-align: left;
   width: 70%;
   height: 20px;
-  font-size: 10px;
+  font-size: 0.625rem;
   margin: 0;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 18px;
-  height: 18px;
+  width: 1.125rem;
+  height: 1.125rem;
   border-radius: 5px;
 
-  & img {
-    width: 10px;
-    height: 10px;
-    transition: transform 0.5s;
+  @media only screen and (min-width: 768px) {
+    width: 1.4rem;
+    height: 1.4rem;
   }
+`;
+
+const StyledButtonImg = styled.img`
+  transform: ${(props) =>
+    props.$minimized === "true" ? `rotate(90deg)` : `rotate(0deg)`};
+  width: 10px;
+  height: 10px;
+  transition: transform 0.5s;
 `;
 
 const ReportForm = styled.form`
   display: grid;
+  width: 100%;
   column-gap: 5px;
   row-gap: 5px;
   justify-content: center;
@@ -94,15 +121,18 @@ const SubmitButton = styled.input`
   border: none;
 `;
 
-const DailyPercentage = styled.div`
+const DailyPercentage = styled.p`
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 30%;
-  height: 20px;
-  font-size: 10px;
+  font-size: 0.625rem;
   margin: 0;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const DailySelled = styled.p`
@@ -110,15 +140,23 @@ const DailySelled = styled.p`
   height: 20px;
   text-align: left;
   margin-top: -2px;
-  font-size: 10px;
+  font-size: 0.625rem;
   margin: 0;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const StyledLabel = styled.label`
   width: 95%;
   height: 20px;
-  font-size: 10px;
+  font-size: 0.625rem;
   margin: 0;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 export default function Day({
@@ -155,18 +193,9 @@ export default function Day({
     transition: minimizedDelayed ? "opacity 1s ease 1s" : "opacity 1s ease",
   };
 
-  const minimize = {
-    height: minimized ? "35px" : "140px",
-    transition: minimized ? "height 1s ease 0.5s" : "height 1s ease",
-  };
-
-  const rotateButton = {
-    transform: minimized ? "rotate(90deg)" : "rotate(0deg)",
-  };
-
   if (Holiday) {
     return (
-      <StyledDay style={minimize}>
+      <StyledDay $minimized={minimized.toString()}>
         <HolidayData>
           <DayOfTheWeek>{dayW}</DayOfTheWeek>
 
@@ -178,27 +207,27 @@ export default function Day({
             handleInvalidDay();
           }}
         >
-          <img src={Holiday ? "./eye.svg" : "./eye-off.svg"} alt="" />
+          <StyledButtonImg
+            src={Holiday ? "./eye.svg" : "./eye-off.svg"}
+            alt=""
+          />
         </StyledButton>
       </StyledDay>
     );
   } else {
     return (
-      <StyledDay style={minimize}>
+      <StyledDay $minimized={minimized.toString()}>
         <MainData>
           <DayOfTheWeek>{dayW}</DayOfTheWeek>
-
           <DailyPercentage>
-            <p>
-              {(
-                ((day.Venta + day.Bonificacion / 1.19 + day.Recargas) /
-                  (data.DailyGoal * percentage)) *
-                100
-              )
-                .toFixed(2)
-                .toLocaleString()}
-              %
-            </p>
+            {(
+              ((day.Venta + day.Bonificacion / 1.19 + day.Recargas) /
+                (data.DailyGoal * percentage)) *
+              100
+            )
+              .toFixed(2)
+              .toLocaleString()}
+            %
           </DailyPercentage>
 
           <DailySelled>
@@ -216,8 +245,8 @@ export default function Day({
               setMinimized(!minimized);
             }}
           >
-            <img
-              style={rotateButton}
+            <StyledButtonImg
+              $minimized={minimized.toString()}
               src="https://cdn-icons-png.flaticon.com/512/25/25243.png"
               alt=""
             />
@@ -227,7 +256,10 @@ export default function Day({
               handleInvalidDay();
             }}
           >
-            <img src={Holiday ? "./eye.svg" : "./eye-off.svg"} alt="" />
+            <StyledButtonImg
+              src={Holiday ? "./eye.svg" : "./eye-off.svg"}
+              alt=""
+            />
           </StyledButton>
         </Buttons>
 

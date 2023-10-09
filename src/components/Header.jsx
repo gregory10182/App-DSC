@@ -20,34 +20,47 @@ const MonthSelector = styled.div`
   margin-bottom: 2.1rem;
   width: 100%;
   height: 5%;
+
+  @media only screen and (min-width: 1024px) {
+    margin-top: 0.5rem;
+  }
 `;
 
 const Selector = styled.div`
+  box-sizing: border-box;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   width: 100%;
-  padding: 10px 0px;
+  padding: 0.5rem 0;
   border-radius: 5px;
   background-color: #009635;
   color: #ffffff;
+
+  @media only screen and (min-width: 768px) {
+    padding: 0.8rem 0;
+  }
 `;
 
 const SelectMP = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  width: 40%;
+  column-gap: 0.5rem;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
 `;
 
 const SelectMPTitle = styled.label`
   width: 100%;
+  font-size: 0.9rem;
 `;
 
 const StyledSelect = styled.select`
-  width: 70px;
-  height: 30px;
-  border-radius: 5px;
+  width: max-content;
+  height: 1.8rem;
+  padding: 0.2rem;
+  border-radius: 0.4rem;
 `;
 
 const StyledButton = styled.button`
@@ -84,10 +97,6 @@ export default function Header() {
               apimonth.getOne(e.target.value).then((res) => {
                 setData(res);
               });
-              // apiGetMonth(e.target.value)
-              // .then((res) => {
-              //   setData(res)
-              // })
             }}
             value={data && data.id}
           >

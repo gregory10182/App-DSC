@@ -1,16 +1,4 @@
 import React from "react";
-
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Title,
-  Tooltip,
-  Legend,
-  ArcElement,
-} from "chart.js";
-import { Doughnut } from "react-chartjs-2";
 import styled from "styled-components";
 
 const StyledDataCard = styled.div`
@@ -25,100 +13,48 @@ const StyledDataCard = styled.div`
   background-color: #009635;
   border-radius: 1rem;
   position: relative;
+
+  @media only screen and (min-width: 1024px) {
+    aspect-ratio: 2/1;
+  }
 `;
 
 const DataCardTitle = styled.p`
-  width: 100%;
+  width: 80%;
+  height: max-content;
+  max-height: 1.2rem;
+  line-height: 0.6rem;
   margin: 0;
-  height: 1rem;
   font-weight: 600;
-  font-size: clamp(0.5rem, 2%, 2rem);
+  font-size: 0.6rem;
   color: #e9a42b;
   overflow: hidden;
-  vertical-align: middle;
+  vertical-align: baseline;
   position: absolute;
-  bottom: 1rem;
+  bottom: 0.6rem;
+
+  @media only screen and (min-width: 768px) {
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+    bottom: 1rem;
+  }
 `;
 
 const DataCardContent = styled.h1`
   width: 100%;
-  font-size: 14px;
+  font-size: 0.7rem;
   margin: 0;
   position: absolute;
-  top: 38%;
-`;
+  top: 50%;
+  transform: translateY(-50%);
 
-const DataCardGauge = styled.div`
-  width: 100%;
-  height: 40px;
-  position: absolute;
-  top: 15%;
+  @media only screen and (min-width: 768px) {
+    font-size: 1.1rem;
+  }
 `;
 
 export default function DataCard(props) {
-  const { Type, Percentage, Name, Data, Img } = props;
-
-  ChartJS.register(
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    ArcElement,
-    Title,
-    Tooltip,
-    Legend
-  );
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: {
-        display: false,
-      },
-    },
-  };
-
-  const GaugeData = {
-    datasets: [
-      {
-        label: Name,
-        data: [
-          parseInt(Data),
-          parseInt(Percentage) * 100 - parseInt(Data) <= 0
-            ? 0
-            : parseInt(Percentage) * 100 - parseInt(Data),
-        ],
-        cutout: 13,
-        borderColor: ["#ffffff", "#ffffff"],
-        backgroundColor: [
-          parseInt(Data) < 50 ? "#DC0505" : "#009635",
-          "#D6D6D6",
-        ],
-        circumference: 190,
-        rotation: 264,
-      },
-    ],
-  };
-
-  const GaugeText = {
-    id: "GaugeText",
-    beforeDatasetsDraw(chart, args, pluginOptions) {
-      const {
-        ctx,
-        data,
-        chartArea: { top, bottom, left, right, width, height },
-      } = chart;
-
-      const xCenter = chart.getDatasetMeta(0).data[0].x;
-      const yCenter = chart.getDatasetMeta(0).data[0].y;
-
-      ctx.save();
-      ctx.fillStyle = data.datasets[0].data[0] < 50 ? "#DC0505" : "#ffffff";
-      ctx.font = "bold 10px sans-serif";
-      ctx.textAlign = "center";
-      ctx.fillText(data.datasets[0].data[0] + " %", xCenter, yCenter);
-    },
-  };
+  const { Type, Name, Data } = props;
 
   if (!Type) {
     return (
@@ -137,10 +73,13 @@ export default function DataCard(props) {
   } else if (Type === "percentage") {
     return (
       <StyledDataCard>
-        <DataCardGauge>
-          <Doughnut options={options} data={GaugeData} plugins={[GaugeText]} />
-        </DataCardGauge>
-
+        {parseInt(Data) < 50 ? (
+          <DataCardContent style={{ color: "rgba(170, 5, 5, 1)" }}>
+            {Data}
+          </DataCardContent>
+        ) : (
+          <DataCardContent style={{ color: "white" }}>{Data}</DataCardContent>
+        )}
         <DataCardTitle>{Name}</DataCardTitle>
       </StyledDataCard>
     );

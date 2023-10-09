@@ -39,6 +39,24 @@ const StyledMenu = styled.div`
     width: 70%;
     height: 2.5rem;
   }
+
+  @media only screen and (min-width: 1024px) {
+    border-radius: 0;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    border: 0.15rem solid #e9a42b;
+    border-top: none;
+    border-bottom: none;
+    border-left: none;
+    transform: translateY(50%);
+    bottom: 50%;
+    left: 0;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 1rem 0.6rem;
+    height: 100%;
+    width: 2rem;
+  }
 `;
 
 export default function Menu() {

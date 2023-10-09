@@ -11,6 +11,11 @@ const StyledCalendar = styled.div`
   column-gap: 2px;
   justify-content: center;
   grid-template-columns: repeat(2, 50% [col-start]);
+
+  @media only screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, 45% [col-start]);
+    column-gap: 1rem;
+  }
 `;
 
 export default function Calendar({ data, percentage, days, setMessage }) {

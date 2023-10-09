@@ -50,6 +50,10 @@ const Container = styled.div`
   @media only screen and (min-width: 768px) {
     margin: 0 4rem;
   }
+
+  @media only screen and (min-width: 1024px) {
+    margin: 0 8rem;
+  }
 `;
 
 function App() {
@@ -147,7 +151,6 @@ function App() {
     ];
 
     let Goal = Math.trunc(data?.Goal * percentage);
-    // let DailyGoal = Math.trunc(data?.DailyGoal * percentage);
     let ActualDays = data?.DailySale.filter((day) => day.Festivo === false);
     let DailyGoal = Math.trunc((Goal / ActualDays?.length) * percentage);
     let GoalAtDay = Math.trunc(DailyGoal * data?.Summary?.Day * percentage);

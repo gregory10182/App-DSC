@@ -6,10 +6,10 @@ const StyledCards = styled.div`
   box-sizing: border-box;
   display: grid;
   width: 100%;
-  gap: clamp(0.2rem, 1%, 2rem);
+  gap: 0.3rem;
   justify-content: center;
   align-content: center;
-  grid-template-columns: repeat(3, 0.5fr [col-start]);
+  grid-template-columns: repeat(3, 1fr [col-start]);
 
   @media only screen and (min-width: 768px) {
     width: 90%;

@@ -5,6 +5,10 @@ export const SectionTitle = styled.h1`
   font-size: 21px;
   margin-bottom: 1rem;
   color: #009635;
+
+  @media only screen and (min-width: 1024px) {
+    margin-top: 0.5rem;
+  }
 `;
 
 export const Page = styled.div`
