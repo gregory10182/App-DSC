@@ -6,5 +6,6 @@ export const dataPercentageContext = createContext(null);
 export const percentageContext = createContext(null);
 export const messageContext = createContext(null);
 export const dailyGoalCContext = createContext(null);
+export const monthChartContext = createContext(null);
 export const userContext = createContext(null);
 export const newMonthContext = createContext(null);

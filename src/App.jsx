@@ -16,11 +16,11 @@ import {
   percentageContext,
   messageContext,
   dailyGoalCContext,
+  monthChartContext,
   userContext,
   newMonthContext,
 } from "./context/dataContext";
 import apimonth from "./components/api/month";
-// import Container from "./components/Container";
 
 //pages
 import Summary from "./pages/Summary";
@@ -62,7 +62,7 @@ function App() {
   const [dataPercentage, setDataPercentage] = useState();
   const [percentage, setPercentage] = useState(1);
   const [dailyGoalC, setDailyGoalC] = useState();
-  const [chartState, setChartState] = useState(false);
+  const [monthsChart, setMonthsChart] = useState();
   const [month, setMonth] = useState(false);
   const [user, setUser] = useState("");
   const [message, setMessage] = useState("");
@@ -115,6 +115,38 @@ function App() {
       });
     }
   }, [user]);
+
+  useEffect(() => {
+    if (Months) {
+      let monthChartData = {
+        labels: new Array(Months.length).fill(0),
+        datasets: [
+          {
+            label: "Meta del Mes",
+            data: new Array(Months.length).fill(0),
+            type: "line",
+            borderColor: "#eddf1c",
+            backgroundColor: "#eddf1c",
+          },
+          {
+            label: "Venta Total",
+            data: new Array(Months.length).fill(0),
+            borderColor: "#009635",
+            backgroundColor: "#009635",
+          },
+        ],
+      };
+
+      Months.map((month, i) => {
+        apimonth.getOne(month.id).then((res) => {
+          monthChartData.datasets[0].data[i] = res.Goal;
+          monthChartData.datasets[1].data[i] = res.Summary.SelledAtDay;
+          monthChartData.labels[i] = res.mid;
+        });
+      });
+      setMonthsChart(monthChartData);
+    }
+  }, [Months]);
 
   useEffect(() => {
     adjustPercentage();
@@ -249,23 +281,30 @@ function App() {
                   <dailyGoalCContext.Provider
                     value={{ dailyGoalC, setDailyGoalC }}
                   >
-                    <userContext.Provider value={{ user, setUser }}>
-                      <newMonthContext.Provider value={{ month, setMonth }}>
-                        {month && (
-                          <CreateMonth
-                            setMessage={(Message) => setMessage(Message)}
-                          />
-                        )}
-                        <Header />
-                        <Routes>
-                          <Route path="/" element={<Summary />} />
-                          <Route path="/calendar" element={<CalendarPage />} />
-                          <Route path="/charts" element={<ChartsPage />} />
-                        </Routes>
-                        <Menu />
-                        <Alert Alert={alert} Message={message} />
-                      </newMonthContext.Provider>
-                    </userContext.Provider>
+                    <monthChartContext.Provider
+                      value={{ monthsChart, setMonthsChart }}
+                    >
+                      <userContext.Provider value={{ user, setUser }}>
+                        <newMonthContext.Provider value={{ month, setMonth }}>
+                          {month && (
+                            <CreateMonth
+                              setMessage={(Message) => setMessage(Message)}
+                            />
+                          )}
+                          <Header />
+                          <Routes>
+                            <Route path="/" element={<Summary />} />
+                            <Route
+                              path="/calendar"
+                              element={<CalendarPage />}
+                            />
+                            <Route path="/charts" element={<ChartsPage />} />
+                          </Routes>
+                          <Menu />
+                          <Alert Alert={alert} Message={message} />
+                        </newMonthContext.Provider>
+                      </userContext.Provider>
+                    </monthChartContext.Provider>
                   </dailyGoalCContext.Provider>
                 </messageContext.Provider>
               </percentageContext.Provider>

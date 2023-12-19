@@ -14,7 +14,7 @@ const StyledCharts = styled.div`
   height: 400px !important;
 `;
 
-export default function BarChart({ data }) {
+export default function BarChart({ data, title }) {
   const options = {
     responsive: true,
     plugins: {
@@ -23,7 +23,7 @@ export default function BarChart({ data }) {
       },
       title: {
         display: true,
-        text: "Venta Diaria",
+        text: title,
       },
     },
     maintainAspectRatio: false,
