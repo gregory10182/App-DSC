@@ -184,8 +184,11 @@ function App() {
 
     let Goal = Math.trunc(data?.Goal * percentage);
     let ActualDays = data?.DailySale.filter((day) => day.Festivo === false);
+    let DaysOff = data?.DailySale?.length - ActualDays?.length;
     let DailyGoal = Math.trunc((Goal / ActualDays?.length) * percentage);
-    let GoalAtDay = Math.trunc(DailyGoal * data?.Summary?.Day * percentage);
+    let GoalAtDay = Math.trunc(
+      DailyGoal * (data?.Summary?.Day - DaysOff) * percentage
+    );
     let SelledAtDay = data?.Summary?.SelledAtDay;
     let PercentageAtDay = ((SelledAtDay / GoalAtDay) * 100).toFixed(1) + "%";
     let TotalPercentage = ((SelledAtDay / Goal) * 100).toFixed(1) + "%";
