@@ -2,7 +2,7 @@ import axios from "axios";
 
 // const baseurl = "http://localhost:8080/";
 // const baseurl = "https://cd-q3eh.onrender.com/";
-const baseurl = "https://sventasapi.gregorypf.site/";
+const baseurl = "https://sventasapi.gregoryperez.tech/";
 
 let token = null;
 
@@ -66,17 +66,6 @@ const updateDay = (id) => {
   const req = axios.put(baseurl + "UpdateDay/" + id, undefined, config);
   return req.then((res) => res.data);
 };
-
-// const switchValidDay = (month) => {
-//   const config = {
-//     headers: {
-//       Authorization: token,
-//     },
-//   };
-
-//   const req = axios.put(baseurl + "DailySale/", month, config);
-//   return req.then((res) => res.data);
-// };
 
 export default {
   getAll,

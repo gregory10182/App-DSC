@@ -78,8 +78,6 @@ export default function Login({ setUser }) {
         password,
       })
       .then((res) => {
-        console.log(res);
-
         window.localStorage.setItem("loggedUser", JSON.stringify(res));
         setUser(res);
       })
@@ -96,9 +94,6 @@ export default function Login({ setUser }) {
         local,
         password,
       })
-      .then((res) => {
-        console.log(res);
-      });
   };
 
   const renderLogin = () => (
